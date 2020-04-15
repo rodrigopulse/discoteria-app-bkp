@@ -61,9 +61,9 @@ class Login extends Component {
           <TouchableHighlight
             onPress = { () => { this.login( this.state.email, this.state.senha ) } }
             underlayColor = { Cores.corPrimariaHover }
-            style = { [ BotoesStyle.botaoPadraoVerde, { "marginBottom": 15 } ] }
+            style = { [ BotoesStyle.botaoPadraoPrimaria, { "marginBottom": 15 } ] }
           >
-            <Text style = { BotoesStyle.textoBotaoPadraoVerde } >Entrar</Text>
+            <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Entrar</Text>
           </TouchableHighlight>
           <TouchableHighlight style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 15 } ] }>
             <Text style = { BotoesStyle.textoBotaoLinkBranco } >Esqueci minha senha</Text>
