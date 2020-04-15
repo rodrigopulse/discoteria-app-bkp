@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 //import { API_URL } from 'react-native-dotenv'
-import { View, Text, Image, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
@@ -71,7 +71,7 @@ class Login extends React.Component {
           <TouchableHighlight
             style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 15 } ] }
             onPress = { () =>
-              this.props.navigation.navigate( 'SignUp' )
+              this.props.navigation.navigate( 'CriarConta' )
             }
           >
             <Text style = { BotoesStyle.textoBotaoLinkBranco } >Criar uma conta</Text>
@@ -85,12 +85,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#222222',
     flex: 1,
-  },
-  imagem: {
-    position: "absolute",
-    marginRight: 0,
-    marginTop: 0,
-    opacity: .2
   },
   conteudoContainer: {
     justifyContent: "center",

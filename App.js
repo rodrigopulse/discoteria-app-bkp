@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 //Views
 import Login from './src/views/Login';
+import CriarConta from './src/views/CriarConta';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ class App extends Component {
         <NavigationContainer>
           <Stack.Navigator  initialRouteName='Login' headerMode="null">
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="CriarConta" component={CriarConta} />
           </Stack.Navigator>
         </NavigationContainer>
       </>
