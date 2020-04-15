@@ -57,8 +57,12 @@ class CriarConta extends React.Component {
       this.props.navigation.navigate( 'Login' )
     }
     catch(error) {
-      this.mensagemErro('Ocorreu um erro')
-      console.log("Erro: ", error)
+      if(error.response.data.code == '11000') {
+        this.mensagemErro('Usuário já existe')
+      } else {
+        this.mensagemErro('Ocorreu um erro')
+      }
+      console.log("Erro: ", error.response.data)
     }
   }
   render() {
