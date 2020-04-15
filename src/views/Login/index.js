@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 //import { API_URL } from 'react-native-dotenv'
 import { View, Text, Image, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
@@ -9,7 +9,7 @@ import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
 //Components
 import Alert from '../../components/Alert';
-class Login extends Component {
+class Login extends React.Component {
   state = {
     email: "",
     senha: "",
@@ -22,7 +22,7 @@ class Login extends Component {
       "password": senha
     }
     try {
-      const res = await axios.post(`http://192.168.1.103:27017/usuarios/login`, data)
+      const res = await axios.post(`http://192.168.1.103:9060/usuarios/login`, data)
       await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token)
       //this.props.navigation.navigate( 'Home' )
     } catch(error) {
