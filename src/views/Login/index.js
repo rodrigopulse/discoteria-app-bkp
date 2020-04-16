@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-//import { API_URL } from 'react-native-dotenv'
+import { API_URL } from 'react-native-dotenv'
 import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
 //Estilos
@@ -19,17 +19,18 @@ class Login extends React.Component {
   login = async ( email, senha ) => {
     data = {
       "email": email,
-      "password": senha
+      "senha": senha
     }
     try {
-      const res = await axios.post(`http://192.168.1.103:9060/usuarios/login`, data)
+      const res = await axios.post(`${API_URL}/usuarios/login`, data)
       await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token)
-      //this.props.navigation.navigate( 'Home' )
+      this.props.navigation.navigate( 'Home' )
     } catch(error) {
       this.setState({
         showAlert: true,
         mensagemAlert: "Usuário e/ou senha incorretos"
       })
+      console.log("Erro: ", error)
     }
   }
   closeAlert = e => {

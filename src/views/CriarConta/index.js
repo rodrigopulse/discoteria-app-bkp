@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { API_URL } from 'react-native-dotenv'
 import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
 //Components
 import Alert from '../../components/Alert';
@@ -51,9 +52,9 @@ class CriarConta extends React.Component {
       data = {
         "nome": this.state.nome,
         "email": this.state.email,
-        "password": this.state.senha
+        "senha": this.state.senha
       }
-      await axios.post(`http://192.168.1.103:9060/usuarios/criar`, data)
+      await axios.post(`${API_URL}/usuarios/criar`, data)
       this.props.navigation.navigate( 'Login' )
     }
     catch(error) {
