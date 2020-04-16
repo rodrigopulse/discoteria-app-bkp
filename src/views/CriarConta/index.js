@@ -8,6 +8,7 @@ import Alert from '../../components/Alert';
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
+
 class CriarConta extends React.Component {
   state = {
     nome: "",
