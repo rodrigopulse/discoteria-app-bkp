@@ -95,7 +95,7 @@ class Login extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#222222',
+    backgroundColor: '#21242D',
     flex: 1,
   },
   conteudoContainer: {

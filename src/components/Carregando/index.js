@@ -1,13 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-
+import { View, Text, Image, StyleSheet } from 'react-native';
+import Cores from '../../assets/styles/cores';
 class Carregando extends React.Component {
   render() {
     return (
       <View style={styles.containerCarregando}>
-        <Text style={styles.texto}>
-          Carregando
-        </Text>
+        <Image style={{width: 280, height: 280, resizeMode: "cover"}} source={require('../../assets/images/carregando.gif')}/>
       </View>
     )
   }
@@ -16,7 +14,7 @@ const styles = StyleSheet.create({
   containerCarregando: {
     height: "100%",
     width: "100%",
-    backgroundColor: "#000",
+    backgroundColor: "#21242D",
     zIndex: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -24,8 +22,5 @@ const styles = StyleSheet.create({
     left:     0,
     top:      0,
   },
-  texto: {
-    color: "#fff"
-  }
 })
 export default Carregando;
