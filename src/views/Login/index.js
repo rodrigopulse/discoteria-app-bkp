@@ -3,20 +3,27 @@ import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
 import AsyncStorage from '@react-native-community/async-storage';
+
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
+
 //Components
 import Alert from '../../components/Alert';
+import Carregando from '../../components/Carregando';
 class Login extends React.Component {
   state = {
     email: "",
     senha: "",
     showAlert: false,
-    mensagemAlert: ""
+    mensagemAlert: "",
+    showCarregando: false
   }
   login = async ( email, senha ) => {
+    this.state = {
+      showCarregando: true
+    }
     data = {
       "email": email,
       "senha": senha
@@ -28,6 +35,7 @@ class Login extends React.Component {
     } catch(error) {
       this.setState({
         showAlert: true,
+        showCarregando: false,
         mensagemAlert: "Usuário e/ou senha incorretos"
       })
       console.log("Erro: ", error)
@@ -41,6 +49,9 @@ class Login extends React.Component {
   render() {
     return(
       <View style = { styles.container } >
+        { this.state.showCarregando &&
+          <Carregando />
+        }
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
         }
