@@ -2,21 +2,29 @@ import React from 'react';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+
 //Components
 import Alert from '../../components/Alert';
+import Carregando from '../../components/Carregando';
+
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
 
 class CriarConta extends React.Component {
-  state = {
-    nome: "",
-    email: "",
-    senha: "",
-    senhaRepete: "",
-    showAlert: false,
-    mensagemAlert: ""
+  constructor(props) {
+    super(props)
+    this.state = {
+      showCarregando: true,
+      nome: "",
+      email: "",
+      senha: "",
+      senhaRepete: "",
+      showAlert: false,
+      mensagemAlert: "",
+    }
   }
   mensagemErro = (mensagem) => {
     console.log('erro')
@@ -30,23 +38,35 @@ class CriarConta extends React.Component {
       showAlert: false
     })
   }
+  fechaCarregando = () => {
+    this.state = {
+      showCarregando: false
+    }
+  }
   criarConta = async () => {
+    this.state = {
+      showCarregando: true
+    }
     // Validações
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(this.state.nome == "") {
       this.mensagemErro('Preencha o seu nome')
+      this.fechaCarregando()
       return false
     }
     if(this.state.email == "" || reg.test(this.state.email) === false) {
       this.mensagemErro('Preencha um e-mail válido')
+      this.fechaCarregando()
       return false
     }
     if(this.state.senha == "") {
       this.mensagemErro('Preencha uma senha')
+      this.fechaCarregando()
       return false
     }
     if(this.state.senha != this.state.senhaRepete) {
       this.mensagemErro('As senhas precisam ser iguais')
+      this.fechaCarregando()
       return false
     }
     try {
@@ -61,15 +81,31 @@ class CriarConta extends React.Component {
     catch(error) {
       if(error.response.data.code == '11000') {
         this.mensagemErro('Usuário já existe')
+        this.fechaCarregando()
       } else {
         this.mensagemErro('Ocorreu um erro')
+        this.fechaCarregando()
       }
-      console.log("Erro: ", error.response.data)
     }
+  }
+  verificaToken = async () => {
+    try {
+      await AsyncStorage.getItem('@DiscoteriaApp:token')
+      this.props.navigation.navigate( 'Home' )
+    }
+    catch(error) {
+      this.fechaCarregando()
+    }
+  }
+  componentDidMount() {
+    this.verificaToken();
   }
   render() {
     return(
       <View style = { styles.container } >
+        { this.state.showCarregando &&
+          <Carregando />
+        }
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
         }
