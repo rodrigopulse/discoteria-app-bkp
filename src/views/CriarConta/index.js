@@ -39,9 +39,9 @@ class CriarConta extends React.Component {
     })
   }
   fechaCarregando = () => {
-    this.state = {
+    this.setState({
       showCarregando: false
-    }
+    })
   }
   criarConta = async () => {
     this.state = {
@@ -90,8 +90,12 @@ class CriarConta extends React.Component {
   }
   verificaToken = async () => {
     try {
-      await AsyncStorage.getItem('@DiscoteriaApp:token')
-      this.props.navigation.navigate( 'Home' )
+      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
+      if(token != null || token) {
+        this.props.navigation.navigate( 'Home' )
+      } else {
+        this.fechaCarregando();
+      }
     }
     catch(error) {
       this.fechaCarregando()
@@ -157,7 +161,7 @@ class CriarConta extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#21242D',
+    backgroundColor: Cores.corSecundaria,
     flex: 1,
   },
   conteudoContainer: {

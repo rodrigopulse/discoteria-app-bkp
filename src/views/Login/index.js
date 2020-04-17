@@ -24,11 +24,12 @@ class Login extends React.Component {
     this.state = {
       showCarregando: true
     }
-    data = {
+    let data = {
       "email": email,
       "senha": senha
     }
     try {
+      console.log(data)
       const res = await axios.post(`${API_URL}/usuarios/login`, data)
       await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token)
       this.props.navigation.navigate( 'Home' )
@@ -95,7 +96,7 @@ class Login extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#21242D',
+    backgroundColor: Cores.corSecundaria,
     flex: 1,
   },
   conteudoContainer: {

@@ -11,7 +11,7 @@ export default BotoesStyle = StyleSheet.create({
   },
   textoBotaoPadraoPrimaria: {
     alignSelf: "center",
-    color: "#fff",
+    color: Cores.corSecundaria,
     fontSize: 16,
   },
   botaoPadraoBranco: {
@@ -23,7 +23,7 @@ export default BotoesStyle = StyleSheet.create({
   },
   textoBotaoPadraoBranco: {
     alignSelf: "center",
-    color: Cores.corPrimaria,
+    color: Cores.corSecundaria,
     fontSize: 16
   },
   botaoLinkBranco: {
