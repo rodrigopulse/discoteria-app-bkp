@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
+//Componentes
+import TabBar from '../../components/TabBar';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import Cores from '../../assets/styles/cores';
@@ -17,6 +19,7 @@ class Home extends React.Component {
   render() {
     return(
       <View style={styles.container}>
+        <TabBar />
         <TouchableHighlight
           onPress = { () => { this.deslogar() } }
           underlayColor = { Cores.corPrimariaHover }
