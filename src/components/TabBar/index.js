@@ -13,7 +13,7 @@ class TabBar extends React.Component {
           <View style={styles.viewTabItem}>
             <Image
               style={{width: 25, height: 25, resizeMode: "cover"}}
-              source={require('../../assets/images/icons/baseline_adjust_black_24dp.png')}/>
+              source={require('../../assets/images/icons/baseline_album_black_24dp.png')}/>
             <Text style={styles.textoBotao}>Coleção</Text>
           </View>
         </TouchableHighlight>
