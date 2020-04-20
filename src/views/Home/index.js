@@ -1,32 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { View, StyleSheet} from 'react-native';
 
+import { ScrollView } from 'react-native-gesture-handler';
 //Componentes
 import TabBar from '../../components/TabBar';
+import Header from '../../components/Header';
 //Estilos
-import BotoesStyle from '../../assets/styles/botoes';
 import Cores from '../../assets/styles/cores';
+import GridStyle from '../../assets/styles/grid';
 class Home extends React.Component {
-  deslogar = async () => {
-    try {
-      const token = await AsyncStorage.removeItem('@DiscoteriaApp:token');
-      this.props.navigation.navigate( 'Login' )
-    } catch(error) {
-      console.log(error)
-    }
-  }
   render() {
     return(
       <View style={styles.container}>
+        <Header navigation={this.props.navigation}/>
+        <ScrollView style={GridStyle.scrollView}>
+          <View style={GridStyle.content}>
+          </View>
+        </ScrollView>
         <TabBar />
-        <TouchableHighlight
-          onPress = { () => { this.deslogar() } }
-          underlayColor = { Cores.corPrimariaHover }
-          style = { [ BotoesStyle.botaoPadraoPrimaria, { "marginBottom": 15 } ] }
-        >
-          <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Deslogar</Text>
-        </TouchableHighlight>
       </View>
     )
   }
