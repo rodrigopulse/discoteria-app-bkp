@@ -28,8 +28,10 @@ class Header extends React.Component {
     return(
       <View style={styles.header}>
         <TouchableHighlight
-          style={{width: 25, height: 25}}
-          onPress = { () => { this.setState({ open: !this.state.open }) } }>
+          style={{width: 35, height: 35, borderRadius: 100, justifyContent: "center", alignItems: "center"}}
+          onPress = { () => { this.setState({ open: !this.state.open }) } }
+          underlayColor = {Cores.corPrimariaHover}
+        >
           <Image
             style={{width: 25, height: 25, resizeMode: "cover"}}
             source={require('../../assets/images/icons/baseline_menu_black_24dp.png')}/>
@@ -39,7 +41,9 @@ class Header extends React.Component {
             <View style={styles.menuContent}>
               <TouchableHighlight
                 style={styles.botaoFechar}
-                onPress = { () => { this.setState({ open: !this.state.open }) } }>
+                onPress = { () => { this.setState({ open: !this.state.open }) } }
+                underlayColor = "#fff"
+              >
                 <Image
                   style={{width: 25, height: 25, resizeMode: "cover"}}
                   source={require('../../assets/images/icons/baseline_cancel_black_18dp.png')}/>
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     backgroundColor: Cores.corPrimaria,
-    paddingLeft: 20,
+    paddingLeft: 10,
     paddingRight: 20,
     justifyContent: "center",
     zIndex: 50,
@@ -112,7 +116,12 @@ const styles = StyleSheet.create({
     color: Cores.corErro,
   },
   botaoFechar: {
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
+    width: 35,
+    height: 35,
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center"
   }
 })
 
