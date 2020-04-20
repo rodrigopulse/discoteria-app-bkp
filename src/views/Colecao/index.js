@@ -10,7 +10,7 @@ import Card from '../../components/Card';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
-class Home extends React.Component {
+class Colecao extends React.Component {
   render() {
     return(
       <View style={styles.container}>
@@ -35,4 +35,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 })
-export default Home
+export default Colecao

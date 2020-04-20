@@ -7,7 +7,7 @@ import {
 //Views
 import Login from './src/views/Login';
 import CriarConta from './src/views/CriarConta';
-import Home from './src/views/Home';
+import Colecao from './src/views/Colecao';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +20,7 @@ class App extends Component {
           <Stack.Navigator  initialRouteName='CriarConta' headerMode="null">
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="CriarConta" component={CriarConta} />
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Colecao" component={Colecao} />
           </Stack.Navigator>
         </NavigationContainer>
       </>

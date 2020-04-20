@@ -32,7 +32,7 @@ class Login extends React.Component {
       console.log(data)
       const res = await axios.post(`${API_URL}/usuarios/login`, data)
       await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token)
-      this.props.navigation.navigate( 'Home' )
+      this.props.navigation.navigate( 'Colecao' )
     } catch(error) {
       this.setState({
         showAlert: true,

@@ -92,7 +92,7 @@ class CriarConta extends React.Component {
     try {
       const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
       if(token != null || token) {
-        this.props.navigation.navigate( 'Home' )
+        this.props.navigation.navigate( 'Colecao' )
       } else {
         this.fechaCarregando();
       }
