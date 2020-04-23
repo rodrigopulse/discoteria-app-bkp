@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet} from 'react-native';
-
 import { ScrollView } from 'react-native-gesture-handler';
 //Componentes
 import TabBar from '../../components/TabBar';
