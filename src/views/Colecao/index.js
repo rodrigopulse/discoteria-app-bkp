@@ -49,13 +49,17 @@ class Colecao extends React.Component {
             { this.state.colecao.length === 0 ? (
               <Text>Carregando</Text>
             ):(
-              this.state.colecao[0].albuns.map( (item, key) =>
-                <Card
-                  capa = {item.capa}
-                  album = {item.nome}
-                  artista = {item.artistas[0].nome}
-                />
-              )
+              <View>
+                <Text style = {styles.totalColecao}>Total na coleção: { this.state.colecao[0].albuns.length }</Text>
+                { this.state.colecao[0].albuns.map( (item, key) =>
+                  <Card
+                    capa = {item.capa}
+                    album = {item.nome}
+                    artista = {item.artistas[0].nome}
+                    key = { key }
+                  />
+                ) }
+              </View>
             )}
           </View>
         </ScrollView>
@@ -69,5 +73,9 @@ const styles = StyleSheet.create({
     backgroundColor: Cores.corSecundaria,
     flex: 1,
   },
+  totalColecao: {
+    color: "#fff",
+    marginBottom: 20
+  }
 })
 export default Colecao
