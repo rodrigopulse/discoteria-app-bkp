@@ -29,9 +29,9 @@ class Login extends React.Component {
       "senha": senha
     }
     try {
-      console.log(data)
-      const res = await axios.post(`${API_URL}/usuarios/login`, data)
-      await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token)
+      const res = await axios.post(`${API_URL}/usuarios/login`, data);
+      await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token);
+      await AsyncStorage.setItem('@DiscoteriaApp:id', res.data.id);
       this.props.navigation.navigate( 'Colecao' )
     } catch(error) {
       this.setState({

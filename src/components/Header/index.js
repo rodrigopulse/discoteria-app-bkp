@@ -10,6 +10,7 @@ class Header extends React.Component {
     }
   }
   toggleOpen = () => {
+    console.log("abreMenu");
     this.setState({ open: !this.state.open });
   }
   overlay = () => {
@@ -18,7 +19,7 @@ class Header extends React.Component {
   deslogar = async () => {
     console.log('deslogar')
     try {
-      const token = await AsyncStorage.removeItem('@DiscoteriaApp:token');
+      await AsyncStorage.removeItem('@DiscoteriaApp:token');
       this.props.navigation.navigate( 'Login' )
     } catch(error) {
       console.log(error)
@@ -29,7 +30,7 @@ class Header extends React.Component {
       <View style={styles.header}>
         <TouchableHighlight
           style={{width: 35, height: 35, borderRadius: 100, justifyContent: "center", alignItems: "center"}}
-          onPress = { () => { this.setState({ open: !this.state.open }) } }
+          onPress = { this.toggleOpen }
           underlayColor = {Cores.corPrimariaHover}
         >
           <Image
@@ -41,7 +42,7 @@ class Header extends React.Component {
             <View style={styles.menuContent}>
               <TouchableHighlight
                 style={styles.botaoFechar}
-                onPress = { () => { this.setState({ open: !this.state.open }) } }
+                onPress = { this.toggleOpen }
                 underlayColor = "#fff"
               >
                 <Image
@@ -66,7 +67,7 @@ class Header extends React.Component {
               </TouchableHighlight>
               <TouchableHighlight
                 style={styles.itemMenu}
-                onPress = { () => { this.deslogar() }}>
+                onPress = { this.deslogar }>
                 <Text style={styles.botaoSair}>Sair</Text>
               </TouchableHighlight>
             </View>
@@ -106,9 +107,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     top: 0,
-    zIndex: 2
+    zIndex: 15
   },
   itemMenu: {
+    width: "100%",
     paddingTop: 20,
     paddingBottom: 20,
   },
