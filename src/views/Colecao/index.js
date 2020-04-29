@@ -5,8 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { API_URL } from 'react-native-dotenv';
 //Componentes
 import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
 import Card from '../../components/Card';
+import Header from '../../components/Header';
+import Menu from '../../components/Menu';
 
 //Estilos
 import Cores from '../../assets/styles/cores';
@@ -16,6 +17,7 @@ class Colecao extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showMenu: false,
       colecao: []
     }
   }
@@ -23,27 +25,30 @@ class Colecao extends React.Component {
     try {
       const idUsuario = await AsyncStorage.getItem('@DiscoteriaApp:id');
       const url = `${API_URL}/colecao/id?id=${idUsuario}`
-      console.log("valor: ", idUsuario)
-      console.log("url", url);
       Axios({
         url: url,
         method: 'GET'
       })
       .then( (res) => {
         this.setState({ colecao: res.data.data })
-        console.log("coleção: ", this.state.colecao[0].albuns)
       })
     } catch (error) {
       console.log(error)
     }
   };
+  toggleOpen = (e) => {
+    this.setState({
+      showMenu: !this.state.showMenu
+    });
+  }
   componentDidMount() {
     this.getColecao()
   }
   render() {
     return(
       <View style={styles.container}>
-        <Header navigation={this.props.navigation}/>
+        <Header toggleOpen={this.toggleOpen} />
+        {this.state.showMenu && <Menu /> }
         <ScrollView style={GridStyle.scrollView}>
           <View style={GridStyle.content}>
             { this.state.colecao.length === 0 ? (
@@ -72,6 +77,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Cores.corSecundaria,
     flex: 1,
+    zIndex: 1
   },
   totalColecao: {
     color: "#fff",

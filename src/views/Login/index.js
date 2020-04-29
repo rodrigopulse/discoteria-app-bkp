@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
-import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native'
+import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 //Estilos
