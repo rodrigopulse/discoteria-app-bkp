@@ -4,6 +4,9 @@ import { API_URL } from 'react-native-dotenv';
 import { View, Image, Text, ScrollView, StyleSheet } from 'react-native';
 //Components
 import Carregando from '../../components/Carregando';
+import TabBar from '../../components/TabBar';
+import Header from '../../components/Header';
+import Menu from '../../components/Menu';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
@@ -12,10 +15,16 @@ class Disco extends React.Component {
     super(props)
     this.state = {
       showCarregando: true,
+      showMenu: false,
       capa: '',
       nome: '',
       artista: ''
     }
+  }
+  toggleOpen = (e) => {
+    this.setState({
+      showMenu: !this.state.showMenu
+    });
   }
   getDisco = () => {
     const url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
@@ -42,6 +51,8 @@ class Disco extends React.Component {
         { this.state.showCarregando &&
           <Carregando />
         }
+        <Header toggleOpen={this.toggleOpen} />
+        {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
           <Image
@@ -60,6 +71,7 @@ class Disco extends React.Component {
           </View>
         </ScrollView>
         }
+        <TabBar navigation={this.props.navigation} />
       </View>
     )
   }
