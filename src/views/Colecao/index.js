@@ -68,7 +68,7 @@ class Colecao extends React.Component {
             )}
           </View>
         </ScrollView>
-        <TabBar />
+        <TabBar navigation={this.props.navigation} />
       </View>
     )
   }

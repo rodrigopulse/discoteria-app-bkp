@@ -40,7 +40,8 @@ class Menu extends React.Component {
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.itemMenu}
-            onPress = { this.deslogar }>
+            onPress = { this.deslogar }
+            underlayColor = "#efefef" >
             <Text style={styles.botaoSair}>Sair</Text>
           </TouchableHighlight>
         </View>
@@ -55,14 +56,13 @@ const styles = StyleSheet.create({
     zIndex: 20,
     top: 0,
     paddingTop: 0,
-    backgroundColor: "#000"
+    backgroundColor: "rgba(0, 0, 0, .8)"
   },
   menuContent: {
     width: 250,
     height: Dimensions.get('window').height,
     backgroundColor: "#fff",
     paddingTop: 10,
-    paddingLeft: 20,
     paddingRight: 10,
     position: "absolute",
     left: 0,
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingTop: 20,
     paddingBottom: 20,
+    paddingLeft: 20,
   },
   botaoSair: {
     color: Cores.corErro,
