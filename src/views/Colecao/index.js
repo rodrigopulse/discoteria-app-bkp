@@ -48,7 +48,7 @@ class Colecao extends React.Component {
     return(
       <View style={styles.container}>
         <Header toggleOpen={this.toggleOpen} />
-        {this.state.showMenu && <Menu /> }
+        {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         <ScrollView style={GridStyle.scrollView}>
           <View style={GridStyle.content}>
             { this.state.colecao.length === 0 ? (

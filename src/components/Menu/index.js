@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Cores from '../../assets/styles/cores';
+
 class Menu extends React.Component {
   constructor(props) {
     super(props)
@@ -9,17 +10,10 @@ class Menu extends React.Component {
       open: false
     }
   }
-  toggleOpen = () => {
-    console.log("abreMenu");
-    this.setState({ open: !this.state.open });
-  }
-  overlay = () => {
-    this.setState({ open: !this.state.open });
-  }
   deslogar = async () => {
     try {
       await AsyncStorage.removeItem('@DiscoteriaApp:token');
-      this.props.navigation.navigate( 'Login' )
+      this.props.navigation.navigate('Login')
     } catch(error) {
       console.log(error)
     }

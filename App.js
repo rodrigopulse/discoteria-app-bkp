@@ -26,8 +26,8 @@ import {NavigationEvents} from 'react-navigation';class App extends Component {
       <>
         <StatusBar barStyle="dark-content" />
         <NavigationContainer>
-          <Stack.Navigator initialRouteName='CriarConta' headerMode="null" logado = {this.logado}>
-            <Stack.Screen name="Login" component={Login} screenProps={this.logado}/>
+          <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
+            <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="CriarConta" component={CriarConta} />
             <Stack.Screen name="Colecao" component={Colecao} />
           </Stack.Navigator>
