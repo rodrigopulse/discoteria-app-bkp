@@ -4,8 +4,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { API_URL } from 'react-native-dotenv';
 //Componentes
-import TabBar from '../../components/TabBar';
+import Carregando from '../../components/Carregando';
 import Card from '../../components/Card';
+import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 
@@ -17,6 +18,7 @@ class Colecao extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      showCarregando: true,
       showMenu: false,
       colecao: []
     }
@@ -30,7 +32,10 @@ class Colecao extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
-        this.setState({ colecao: res.data.data })
+        this.setState({
+          showCarregando: false,
+          colecao: res.data.data
+        })
       })
     } catch (error) {
       console.log(error)
@@ -47,12 +52,15 @@ class Colecao extends React.Component {
   render() {
     return(
       <View style={styles.container}>
+        { this.state.showCarregando &&
+          <Carregando />
+        }
         <Header toggleOpen={this.toggleOpen} />
         {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         <ScrollView style={GridStyle.scrollView}>
           <View style={GridStyle.content}>
             { this.state.colecao.length === 0 ? (
-              <Text>Carregando</Text>
+              null
             ):(
               <View>
                 <Text style = {styles.totalColecao}>Total na coleção: { this.state.colecao[0].albuns.length }</Text>
