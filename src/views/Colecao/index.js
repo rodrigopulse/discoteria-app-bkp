@@ -60,7 +60,9 @@ class Colecao extends React.Component {
                   <Card
                     capa = {item.capa}
                     album = {item.nome}
+                    id = {item._id}
                     artista = {item.artistas[0].nome}
+                    navigation={this.props.navigation}
                     key = { key }
                   />
                 ) }

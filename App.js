@@ -4,12 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {
   StatusBar,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import OneSignal from 'react-native-onesignal';
 //Views
 import Login from './src/views/Login';
 import CriarConta from './src/views/CriarConta';
 import Colecao from './src/views/Colecao';
+import Disco from './src/views/Disco';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +30,7 @@ import {NavigationEvents} from 'react-navigation';class App extends Component {
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="CriarConta" component={CriarConta} />
             <Stack.Screen name="Colecao" component={Colecao} />
+            <Stack.Screen name="Disco" component={Disco} />
           </Stack.Navigator>
         </NavigationContainer>
       </>

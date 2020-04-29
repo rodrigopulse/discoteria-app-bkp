@@ -1,19 +1,25 @@
 import React from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native';
 
 class Card extends React.Component {
   constructor(props) {
     super(props)
   }
+  goDisco = () => {
+    this.props.navigation.navigate('Disco')
+  }
   render() {
     return (
       <View style={styles.card}>
+        <TouchableHighlight
+        onPress = { this.goDisco }>
          <Image
           style={styles.capa}
           source={{
             uri: this.props.capa,
           }}
           />
+        </TouchableHighlight>
           <View style={styles.cardContent}>
             <Text style={styles.nomeArtista}>{this.props.artista}</Text>
             <Text style={styles.nomeAlbum}>{this.props.album}</Text>
