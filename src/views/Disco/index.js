@@ -77,13 +77,13 @@ class Disco extends React.Component {
             <Text style={styles.textoBold}>Lado A</Text>
            { this.state.ladoa.map( (item, key) =>
             <Text style={styles.texto} key = {key}>
-              {item}
+              { key + 1 }. { item }
             </Text>
            )}
            <Text style={[styles.textoBold, {marginTop: 20}]}>Lado B</Text>
            { this.state.ladob.map( (item, key) =>
             <Text style={styles.texto} key = {key}>
-              {item}
+              { key + 1 }. { item }
             </Text>
            )}
           </View>
