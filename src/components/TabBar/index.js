@@ -9,7 +9,11 @@ class TabBar extends React.Component {
   render() {
     return (
       <View style={styles.tabBar}>
-        <TouchableHighlight style={styles.botaoTabBar}>
+        <TouchableHighlight
+          style = {styles.botaoTabBar}
+          onPress = { () => { this.props.navigation.navigate('Colecao') } }
+          underlayColor = {Cores.corPrimariaHover}
+        >
           <View style={styles.viewTabItem}>
             <Image
               style={{width: 25, height: 25, resizeMode: "cover"}}

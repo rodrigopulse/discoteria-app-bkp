@@ -27,7 +27,9 @@ class Menu extends React.Component {
             <Text>Meu Perfil</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            style={styles.itemMenu}>
+            style={styles.itemMenu}
+            onPress = { () => { this.props.navigation.navigate('Colecao') } }
+            underlayColor = "#efefef">
             <Text>Minha Coleção</Text>
           </TouchableHighlight>
           <TouchableHighlight
