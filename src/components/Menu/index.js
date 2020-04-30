@@ -13,6 +13,7 @@ class Menu extends React.Component {
   deslogar = async () => {
     try {
       await AsyncStorage.removeItem('@DiscoteriaApp:token');
+      this.props.toggleOpen && this.props.toggleOpen();
       this.props.navigation.navigate('Login')
     } catch(error) {
       console.log(error)
@@ -28,7 +29,10 @@ class Menu extends React.Component {
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.itemMenu}
-            onPress = { () => { this.props.navigation.navigate('Colecao') } }
+            onPress = { () => {
+              this.props.toggleOpen && this.props.toggleOpen();
+              this.props.navigation.navigate('Colecao');
+            } }
             underlayColor = "#efefef">
             <Text>Minha Coleção</Text>
           </TouchableHighlight>
