@@ -9,7 +9,7 @@ class Header extends React.Component {
     }
   }
   toggleOpen = () => {
-    console.log("abreMenu");
+    ("abreMenu");
     this.setState({ open: !this.state.open });
     this.props.toggleOpen && this.props.toggleOpen();
   }

@@ -18,7 +18,9 @@ class Disco extends React.Component {
       showMenu: false,
       capa: '',
       nome: '',
-      artista: ''
+      artista: '',
+      ladoa: [],
+      ladob: []
     }
   }
   toggleOpen = (e) => {
@@ -33,13 +35,15 @@ class Disco extends React.Component {
       method: "GET"
     })
     .then( (res) => {
-      console.log(res.data.data[0].capa)
       this.setState({
         showCarregando: false,
         capa: res.data.data[0].capa,
         nome: res.data.data[0].nome,
-        artista: res.data.data[0].artistas[0].nome
+        artista: res.data.data[0].artistas[0].nome,
+        ladoa: res.data.data[0].ladoa,
+        ladob: res.data.data[0].ladob
       })
+      console.log(this.state.ladob)
     })
   }
   componentDidMount() {
@@ -69,6 +73,20 @@ class Disco extends React.Component {
               Artista: <Text style={styles.texto}>{this.state.artista}</Text>
             </Text>
           </View>
+          <View style={styles.musicas}>
+            <Text style={styles.textoBold}>Lado A</Text>
+           { this.state.ladoa.map( (item, key) =>
+            <Text style={styles.texto} key = {key}>
+              {item}
+            </Text>
+           )}
+           <Text style={[styles.textoBold, {marginTop: 20}]}>Lado B</Text>
+           { this.state.ladob.map( (item, key) =>
+            <Text style={styles.texto} key = {key}>
+              {item}
+            </Text>
+           )}
+          </View>
         </ScrollView>
         }
         <TabBar navigation={this.props.navigation} />
@@ -85,7 +103,7 @@ const styles = StyleSheet.create({
   containerContent: {
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 20
+    paddingTop: 20,
   },
   capa: {
     width: '100%',
@@ -102,6 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#fff",
     fontWeight: "700"
+  },
+  musicas: {
+    paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 70
   }
 })
 export default Disco
