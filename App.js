@@ -10,6 +10,7 @@ import Login from './src/views/Login';
 import CriarConta from './src/views/CriarConta';
 import Colecao from './src/views/Colecao';
 import Disco from './src/views/Disco';
+import Busca from './src/views/Busca';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ import {NavigationEvents} from 'react-navigation';class App extends Component {
             <Stack.Screen name="CriarConta" component={CriarConta} />
             <Stack.Screen name="Colecao" component={Colecao} />
             <Stack.Screen name="Disco" component={Disco} />
+            <Stack.Screen name="Busca" component={Busca} />
           </Stack.Navigator>
         </NavigationContainer>
       </>

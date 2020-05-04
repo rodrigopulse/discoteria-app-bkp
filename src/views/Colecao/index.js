@@ -3,6 +3,7 @@ import { View, StyleSheet, Text} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { API_URL } from 'react-native-dotenv';
+import Axios from 'axios';
 //Componentes
 import Carregando from '../../components/Carregando';
 import Card from '../../components/Card';
@@ -13,7 +14,6 @@ import Menu from '../../components/Menu';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
-import Axios from 'axios';
 class Colecao extends React.Component {
   constructor(props) {
     super(props);
