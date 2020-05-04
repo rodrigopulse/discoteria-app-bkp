@@ -55,10 +55,10 @@ class Disco extends React.Component {
         { this.state.showCarregando &&
           <Carregando />
         }
-        <Header toggleOpen={this.toggleOpen} />
         {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
+          <Header toggleOpen={this.toggleOpen} />
           <Image
             style={styles.capa}
             source={{
