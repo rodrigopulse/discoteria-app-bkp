@@ -12,18 +12,21 @@ class Card extends React.Component {
     return (
       <View style={styles.card}>
         <TouchableHighlight
+        underlayColor = "#efefef"
         onPress = { this.goDisco }>
-         <Image
-          style={styles.capa}
-          source={{
-            uri: this.props.capa,
-          }}
-          />
-        </TouchableHighlight>
           <View style={styles.cardContent}>
-            <Text style={styles.nomeArtista}>{this.props.artista}</Text>
-            <Text style={styles.nomeAlbum}>{this.props.album}</Text>
+            <Image
+              style={styles.capa}
+              source={{
+                uri: this.props.capa,
+              }}
+            />
+            <View style={styles.cardTextos}>
+              <Text style={styles.nomeArtista}>{this.props.artista}</Text>
+              <Text style={styles.nomeAlbum}>{this.props.album}</Text>
+            </View>
           </View>
+        </TouchableHighlight>
       </View>
     )
   }
@@ -35,7 +38,9 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   cardContent: {
-    padding: 20
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row'
   },
   nomeArtista: {
     fontSize: 14,
@@ -45,10 +50,14 @@ const styles = StyleSheet.create({
     fontWeight: "700"
   },
   capa: {
-    width: '100%',
+    width: '20%',
     height: undefined,
     aspectRatio: 1 / 1,
     resizeMode: "cover"
+  },
+  cardTextos: {
+    width: '80%',
+    paddingLeft: 10
   }
 })
 export default Card
