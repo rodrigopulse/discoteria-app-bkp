@@ -19,9 +19,19 @@ class Menu extends React.Component {
       console.log(error)
     }
   }
+  fecharMenu = () => {
+    this.props.toggleOpen && this.props.toggleOpen();
+  }
   render() {
     return (
       <View style={styles.menu}>
+        <TouchableHighlight
+          style={styles.overlay}
+          onPress = { () => { this.fecharMenu() } }
+          underlayColor = ""
+        >
+          <View style={styles.overlay}></View>
+        </TouchableHighlight>
         <View style={styles.menuContent}>
           <TouchableHighlight
             style={styles.itemMenu}>
@@ -31,7 +41,7 @@ class Menu extends React.Component {
             style={styles.itemMenu}
             onPress = { () => {
               this.props.toggleOpen && this.props.toggleOpen();
-              this.props.navigation.navigate('Colecao');
+              this.props.navigation.replace('Colecao');
             } }
             underlayColor = "#efefef">
             <Text>Minha Coleção</Text>
@@ -63,6 +73,13 @@ const styles = StyleSheet.create({
     top: 0,
     paddingTop: 0,
     backgroundColor: "rgba(0, 0, 0, .8)"
+  },
+  overlay: {
+    width: Dimensions.get('window').width - 250,
+    height: Dimensions.get('window').height,
+    position: 'absolute',
+    right: 0,
+    top: 0
   },
   menuContent: {
     width: 250,

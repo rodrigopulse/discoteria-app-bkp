@@ -168,7 +168,7 @@ class Disco extends React.Component {
             {!this.state.adicionado &&
               <TouchableHighlight
                 onPress = { () => { this.adicionarColecao() } }
-                underlayColor = { Cores.corPrimariaHover }
+                underlayColor = ""
                 style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 20 } ] }
               >
                 <Text style = { BotoesStyle.textoBotaoLinkPrimaria } >Adicionar na Coleção</Text>
@@ -199,7 +199,7 @@ class Disco extends React.Component {
             <View style={styles.botaoRemoverContainer}>
               <TouchableHighlight
                 onPress = { () => { this.removerColecao() } }
-                underlayColor = { Cores.corPrimariaHover }
+                underlayColor = ""
                 style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 20 } ] }
               >
                 <Text style = { BotoesStyle.textoBotaoLinkVermelho } >Remover da Coleção</Text>

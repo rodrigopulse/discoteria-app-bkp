@@ -14,7 +14,7 @@ import Busca from './src/views/Busca';
 
 const Stack = createStackNavigator();
 
-import {NavigationEvents} from 'react-navigation';class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     OneSignal.init("66e4bf9a-ba43-4222-be66-b0b9e7491586", {kOSSettingsKeyAutoPrompt : false});
