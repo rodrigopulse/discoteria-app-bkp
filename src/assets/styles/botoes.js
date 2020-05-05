@@ -32,5 +32,8 @@ export default BotoesStyle = StyleSheet.create({
   textoBotaoLinkBranco: {
     color: "#fff",
     fontWeight: "700"
+  },
+  textoBotaoLinkPrimaria: {
+    color: Cores.corPrimaria
   }
 })

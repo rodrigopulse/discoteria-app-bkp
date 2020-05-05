@@ -2,11 +2,13 @@ import React from 'react';
 import Axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 //Components
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+import Alert from '../../components/Alert';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
@@ -22,7 +24,9 @@ class Disco extends React.Component {
       artista: '',
       ladoa: [],
       ladob: [],
-      adicionado: false
+      adicionado: false,
+      showAlert: false,
+      mensagemAlert: ''
     }
   }
   toggleOpen = (e) => {
@@ -68,8 +72,41 @@ class Disco extends React.Component {
       })
     })
   }
-  adicionarColecao = () => {
+  adicionarColecao = async() => {
+    this.setState({
+      showCarregando: true
+    })
     console.log('adicionar coleção')
+    try {
+      const idUsuario = await AsyncStorage.getItem('@DiscoteriaApp:id');
+      const albumId = this.props.route.params.id;
+      const url = `${API_URL}/colecao/cadastra`
+      let data = {
+        idUsuario: idUsuario,
+        "album": albumId,
+        "albuns": albumId
+      }
+      Axios({
+        url: url,
+        data: data,
+        method: "POST"
+      })
+      .then( (res) => {
+        this.setState({
+          adicionado: true,
+          showAlert: true,
+          mensagemAlert: "Disco adicionado",
+          showCarregando: false
+        })
+      })
+    } catch(erro) {
+      this.setState({
+        showAlert: true,
+        mensagemAlert: "Ocorreu um erro",
+        showCarregando: false
+      })
+    }
+
   }
   componentDidMount() {
     this.getDisco()
@@ -79,6 +116,9 @@ class Disco extends React.Component {
       <View style={styles.container}>
         { this.state.showCarregando &&
           <Carregando />
+        }
+        { this.state.showAlert &&
+          <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
         }
         {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         {this.state.capa != '' &&
@@ -93,11 +133,11 @@ class Disco extends React.Component {
           <View style={styles.containerContent}>
             {!this.state.adicionado &&
               <TouchableHighlight
-                onPress = { () => { this.adcionarColecao() } }
+                onPress = { () => { this.adicionarColecao() } }
                 underlayColor = { Cores.corPrimariaHover }
-                style = { [ BotoesStyle.botaoPadraoPrimaria, { "marginBottom": 15 } ] }
+                style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 20 } ] }
               >
-                <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Adicionar Coleção</Text>
+                <Text style = { BotoesStyle.textoBotaoLinkPrimaria } >Adicionar na Coleção</Text>
               </TouchableHighlight>
             }
             <Text style={styles.textoBold}>

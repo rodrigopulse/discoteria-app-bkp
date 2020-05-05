@@ -12,7 +12,7 @@ export default class Alert extends Component {
   }
   render() {
     return (
-      <TouchableOpacity style = { styles.alert } onPress = { () => this.close() } >
+      <TouchableOpacity style = {styles.alert} onPress = { () => this.close() } >
         <Text style = { styles.alertText } >
           { this.props.mensagem }
         </Text>

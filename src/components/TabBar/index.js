@@ -11,7 +11,7 @@ class TabBar extends React.Component {
       <View style={styles.tabBar}>
         <TouchableHighlight
           style = {styles.botaoTabBar}
-          onPress = { () => { this.props.navigation.navigate('Colecao') } }
+          onPress = { () => { this.props.navigation.replace('Colecao') } }
           underlayColor = {Cores.corPrimariaHover}
         >
           <View style={styles.viewTabItem}>
