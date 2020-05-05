@@ -17,6 +17,7 @@ class Disco extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      idColecao: '',
       showCarregando: true,
       showMenu: false,
       capa: '',
@@ -41,8 +42,6 @@ class Disco extends React.Component {
       method: "GET"
     })
     .then( (res) => {
-      console.log(res.data.data[0].albuns.capa)
-      console.log("Estado Adicionado: ", this.state.adicionado)
       this.setState({
         showCarregando: false,
         adicionado: true,
@@ -50,11 +49,11 @@ class Disco extends React.Component {
         nome: res.data.data[0].albuns.nome,
         artista: res.data.data[0].albuns.artistas[0].nome,
         ladoa: res.data.data[0].albuns.ladoa,
-          ladob: res.data.data[0].albuns.ladob,
+        ladob: res.data.data[0].albuns.ladob,
+        idColecao: res.data.data[0]._id
       })
     })
-    .catch( (res) => {
-      console.log(res)
+    .catch( () => {
       let url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
       Axios({
         url: url,
@@ -68,6 +67,7 @@ class Disco extends React.Component {
           artista: res.data.data[0].artistas[0].nome,
           ladoa: res.data.data[0].ladoa,
           ladob: res.data.data[0].ladob,
+          idColecao: res.data.data[0]._id
         })
       })
     })
