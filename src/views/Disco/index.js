@@ -1,7 +1,7 @@
 import React from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
-import { View, Image, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
 //Components
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
@@ -10,6 +10,7 @@ import Menu from '../../components/Menu';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
+
 class Disco extends React.Component {
   constructor(props) {
     super(props)
@@ -20,7 +21,8 @@ class Disco extends React.Component {
       nome: '',
       artista: '',
       ladoa: [],
-      ladob: []
+      ladob: [],
+      adicionado: false
     }
   }
   toggleOpen = (e) => {
@@ -28,23 +30,46 @@ class Disco extends React.Component {
       showMenu: !this.state.showMenu
     });
   }
-  getDisco = () => {
-    const url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
-    axios({
+  getDisco = async () => {
+    let url = `${API_URL}/colecao/idalbum?id=${this.props.route.params.id}`
+    Axios({
       url: url,
       method: "GET"
     })
     .then( (res) => {
+      console.log(res.data.data[0].albuns.capa)
+      console.log("Estado Adicionado: ", this.state.adicionado)
       this.setState({
         showCarregando: false,
-        capa: res.data.data[0].capa,
-        nome: res.data.data[0].nome,
-        artista: res.data.data[0].artistas[0].nome,
-        ladoa: res.data.data[0].ladoa,
-        ladob: res.data.data[0].ladob
+        adicionado: true,
+        capa: res.data.data[0].albuns.capa,
+        nome: res.data.data[0].albuns.nome,
+        artista: res.data.data[0].albuns.artistas[0].nome,
+        ladoa: res.data.data[0].albuns.ladoa,
+          ladob: res.data.data[0].albuns.ladob,
       })
-      console.log(this.state.ladob)
     })
+    .catch( (res) => {
+      console.log(res)
+      let url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
+      Axios({
+        url: url,
+        method: "GET"
+      })
+      .then( (res) => {
+        this.setState({
+          showCarregando: false,
+          capa: res.data.data[0].capa,
+          nome: res.data.data[0].nome,
+          artista: res.data.data[0].artistas[0].nome,
+          ladoa: res.data.data[0].ladoa,
+          ladob: res.data.data[0].ladob,
+        })
+      })
+    })
+  }
+  adicionarColecao = () => {
+    console.log('adicionar coleção')
   }
   componentDidMount() {
     this.getDisco()
@@ -66,6 +91,15 @@ class Disco extends React.Component {
             }}
           />
           <View style={styles.containerContent}>
+            {!this.state.adicionado &&
+              <TouchableHighlight
+                onPress = { () => { this.adcionarColecao() } }
+                underlayColor = { Cores.corPrimariaHover }
+                style = { [ BotoesStyle.botaoPadraoPrimaria, { "marginBottom": 15 } ] }
+              >
+                <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Adicionar Coleção</Text>
+              </TouchableHighlight>
+            }
             <Text style={styles.textoBold}>
               Albúm: <Text style={styles.texto}>{this.state.nome}</Text>
             </Text>
@@ -89,7 +123,7 @@ class Disco extends React.Component {
           </View>
         </ScrollView>
         }
-        <TabBar navigation={this.props.navigation} />
+        <TabBar navigation={ this.props.navigation } />
       </View>
     )
   }
