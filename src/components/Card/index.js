@@ -6,7 +6,7 @@ class Card extends React.Component {
     super(props)
   }
   goDisco = () => {
-    this.props.navigation.navigate('Disco', {id: this.props.id})
+    this.props.navigation.replace('Disco', {id: this.props.id})
   }
   render() {
     return (
