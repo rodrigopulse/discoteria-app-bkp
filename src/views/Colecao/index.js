@@ -20,7 +20,8 @@ class Colecao extends React.Component {
     this.state = {
       showCarregando: true,
       showMenu: false,
-      colecao: []
+      colecao: [],
+      nenhumDisco: false
     }
   }
   getColecao = async () => {
@@ -37,8 +38,17 @@ class Colecao extends React.Component {
           colecao: res.data.data
         })
       })
+      .catch( (res) => {
+        this.setState({
+          showCarregando: false,
+          nenhumDisco: true
+        })
+      })
     } catch (error) {
-      console.log(error)
+      this.setState({
+        showCarregando: false,
+        nenhumDisco: true
+      })
     }
   };
   toggleOpen = (e) => {
@@ -56,28 +66,37 @@ class Colecao extends React.Component {
           <Carregando />
         }
         {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-        <ScrollView style={GridStyle.scrollView}>
-          <Header toggleOpen={this.toggleOpen} />
-          <View style={GridStyle.content}>
-            { this.state.colecao.length === 0 ? (
-              null
-            ):(
-              <View>
-                <Text style = {styles.totalColecao}>Total na coleção: { this.state.colecao[0].albuns.length }</Text>
-                { this.state.colecao[0].albuns.map( (item, key) =>
-                  <Card
-                    capa = {item.capa}
-                    album = {item.nome}
-                    id = {item._id}
-                    artista = {item.artistas[0].nome}
-                    navigation={this.props.navigation}
-                    key = { key }
-                  />
-                ) }
-              </View>
-            )}
-          </View>
-        </ScrollView>
+        { this.state.nenhumDisco ? (
+          <ScrollView style={GridStyle.scrollView}>
+            <Header toggleOpen={this.toggleOpen} />
+            <View style={GridStyle.content}>
+              <Text style = {styles.totalColecao}>Nenhum disco na sua coleção</Text>
+            </View>
+          </ScrollView>
+        ) : (
+          <ScrollView style={GridStyle.scrollView}>
+            <Header toggleOpen={this.toggleOpen} />
+            <View style={GridStyle.content}>
+              { this.state.colecao.length === 0 ? (
+                null
+              ):(
+                <View>
+                  <Text style = {styles.totalColecao}>Total na coleção: { this.state.colecao[0].albuns.length }</Text>
+                  { this.state.colecao[0].albuns.map( (item, key) =>
+                    <Card
+                      capa = {item.capa}
+                      album = {item.nome}
+                      id = {item._id}
+                      artista = {item.artistas[0].nome}
+                      navigation={this.props.navigation}
+                      key = { key }
+                    />
+                  ) }
+                </View>
+              )}
+            </View>
+          </ScrollView>
+        )}
         <TabBar navigation={this.props.navigation} />
       </View>
     )
