@@ -73,7 +73,31 @@ class Disco extends React.Component {
     })
   }
   removerColecao = async () => {
-    console.log("remover da coleção")
+    this.setState({
+      showCarregando: true
+    })
+    console.log('adicionar coleção')
+    try {
+      const url = `${API_URL}/colecao/delete/${this.state.idColecao}`
+      Axios({
+        url: url,
+        method: "POST"
+      })
+      .then( (res) => {
+        this.setState({
+          adicionado: false,
+          showAlert: true,
+          mensagemAlert: "Disco removido da Coleção",
+          showCarregando: false
+        })
+      })
+    } catch(erro) {
+      this.setState({
+        showAlert: true,
+        mensagemAlert: "Ocorreu um erro",
+        showCarregando: false
+      })
+    }
   }
   adicionarColecao = async () => {
     this.setState({
@@ -109,7 +133,6 @@ class Disco extends React.Component {
         showCarregando: false
       })
     }
-
   }
   componentDidMount() {
     this.getDisco()
