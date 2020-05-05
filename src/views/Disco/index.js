@@ -72,7 +72,10 @@ class Disco extends React.Component {
       })
     })
   }
-  adicionarColecao = async() => {
+  removerColecao = async () => {
+    console.log("remover da coleção")
+  }
+  adicionarColecao = async () => {
     this.setState({
       showCarregando: true
     })
@@ -161,6 +164,17 @@ class Disco extends React.Component {
             </Text>
            )}
           </View>
+          {this.state.adicionado &&
+            <View style={styles.botaoRemoverContainer}>
+              <TouchableHighlight
+                onPress = { () => { this.removerColecao() } }
+                underlayColor = { Cores.corPrimariaHover }
+                style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 20 } ] }
+              >
+                <Text style = { BotoesStyle.textoBotaoLinkVermelho } >Remover da Coleção</Text>
+              </TouchableHighlight>
+            </View>
+          }
         </ScrollView>
         }
         <TabBar navigation={ this.props.navigation } />
@@ -197,6 +211,11 @@ const styles = StyleSheet.create({
   },
   musicas: {
     paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 70
+  },
+  botaoRemoverContainer: {
     paddingLeft: 20,
     paddingRight: 20,
     paddingBottom: 70
