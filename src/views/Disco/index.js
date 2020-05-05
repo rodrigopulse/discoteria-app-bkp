@@ -27,13 +27,19 @@ class Disco extends React.Component {
       ladob: [],
       adicionado: false,
       showAlert: false,
-      mensagemAlert: ''
+      mensagemAlert: '',
+      sucessoAlert: false
     }
   }
   toggleOpen = (e) => {
     this.setState({
       showMenu: !this.state.showMenu
     });
+  }
+  closeAlert = e => {
+    this.setState({
+      showAlert: false
+    })
   }
   getDisco = async () => {
     let url = `${API_URL}/colecao/idalbum?id=${this.props.route.params.id}`
@@ -88,6 +94,7 @@ class Disco extends React.Component {
           adicionado: false,
           showAlert: true,
           mensagemAlert: "Disco removido da Coleção",
+          sucessoAlert: true,
           showCarregando: false
         })
       })
@@ -123,7 +130,8 @@ class Disco extends React.Component {
           adicionado: true,
           showAlert: true,
           mensagemAlert: "Disco adicionado",
-          showCarregando: false
+          showCarregando: false,
+          sucessoAlert: true,
         })
       })
     } catch(erro) {
@@ -144,7 +152,7 @@ class Disco extends React.Component {
           <Carregando />
         }
         { this.state.showAlert &&
-          <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
+          <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
         }
         {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         {this.state.capa != '' &&

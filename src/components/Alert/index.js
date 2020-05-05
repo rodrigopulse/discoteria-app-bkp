@@ -12,7 +12,7 @@ export default class Alert extends Component {
   }
   render() {
     return (
-      <TouchableOpacity style = {styles.alert} onPress = { () => this.close() } >
+      <TouchableOpacity style = { this.props.sucesso == true ? styles.alertSucesso : styles.alert } onPress = { () => this.close() } >
         <Text style = { styles.alertText } >
           { this.props.mensagem }
         </Text>
@@ -31,6 +31,17 @@ const styles = StyleSheet.create({
     width: Dimensions.get( 'window' ).width,
     height: 50,
     backgroundColor: Cores.corErro,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    zIndex: 10,
+    justifyContent: "center",
+    display: "flex"
+  },
+  alertSucesso: {
+    width: Dimensions.get( 'window' ).width,
+    height: 50,
+    backgroundColor: Cores.corPrimariaHover,
     position: "absolute",
     top: 0,
     left: 0,
