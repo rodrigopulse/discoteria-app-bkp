@@ -48,13 +48,19 @@ class AdicionarDisco1 extends React.Component {
           <Carregando />
         }
         <Header toggleOpen={this.toggleOpen} />
+
         <View style={styles.containerContent}>
+          <Text style={styles.titulo}>Vamos por partes :)</Text>
+          <Text style={styles.texto}>Qual artista gravou esse álbum?</Text>
           <TextInput
             returnKeyType="search"
             onSubmitEditing={ this.buscarArtista }
             onChangeText = { ( text => this.setState( { inputBusca: text, showAlert: false } ) ) }
             placeholder = "Buscar o artista" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />
+          {this.state.resultado.length > 0 &&
+            <Text style={styles.texto}>Encontramos {this.state.resultado.length} artista(s)</Text>
+          }
           { this.state.resultado.map( (item, key) =>
             <TouchableHighlight
               key = {key}
@@ -76,14 +82,27 @@ const styles = StyleSheet.create({
     backgroundColor: Cores.corSecundaria,
     flex: 1,
   },
+  titulo: {
+    fontSize: 22,
+    color: Cores.corPrimaria,
+    marginBottom: 10,
+  },
+  texto: {
+    color: "#fff",
+    fontSize: 16,
+    marginBottom: 15,
+    textAlign: "center"
+  },
   containerContent: {
     paddingTop: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
     flex: 1,
     alignItems: "center"
   },
   checkbox: {
     height: 40,
-    width: 280,
+    width: '100%',
     borderRadius: 10,
     backgroundColor : "#F0F0F0",
     justifyContent: "center",
@@ -91,7 +110,7 @@ const styles = StyleSheet.create({
   },
   checkboxSelecionado: {
     height: 40,
-    width: 280,
+    width: '100%',
     borderRadius: 10,
     backgroundColor : "#80B3EE",
     justifyContent: "center",

@@ -11,6 +11,16 @@ export default FormStyle = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25
   },
+  inputs100: {
+    width: '100%',
+    height: 50,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingLeft: 25,
+    paddingRight: 25
+  },
   inputMarginBottom: {
     marginBottom: 15
   }
