@@ -11,6 +11,8 @@ import CriarConta from './src/views/CriarConta';
 import Colecao from './src/views/Colecao';
 import Disco from './src/views/Disco';
 import Busca from './src/views/Busca';
+import AdicionarDisco1 from './src/views/AdicionarDisco/AdicionarDisco1';
+import AdicionarDisco2 from './src/views/AdicionarDisco/AdicionarDisco2';
 
 const Stack = createStackNavigator();
 
@@ -33,6 +35,8 @@ class App extends Component {
             <Stack.Screen name="Colecao" component={Colecao} />
             <Stack.Screen name="Disco" component={Disco} />
             <Stack.Screen name="Busca" component={Busca} />
+            <Stack.Screen name="AdicionarDisco1" component={AdicionarDisco1} />
+            <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
           </Stack.Navigator>
         </NavigationContainer>
       </>

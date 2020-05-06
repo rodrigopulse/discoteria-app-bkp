@@ -68,7 +68,7 @@ class Busca extends React.Component {
             <View style={styles.containerNaoEncontrado}>
               <Text style={styles.textoNaoEncontrado}>Resultado não encontrado</Text>
               <TouchableHighlight
-                onPress = { () => { this.adicionar() } }
+                onPress = { () => { this.props.navigation.replace('AdicionarDisco1'); } }
                 underlayColor = { Cores.corPrimariaHover }
                 style = { [ BotoesStyle.botaoPadraoPrimaria, { "marginBottom": 15 } ] }
               >

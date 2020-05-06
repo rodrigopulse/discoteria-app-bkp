@@ -29,7 +29,10 @@ class TabBar extends React.Component {
             <Text style={styles.textoBotao}>Desejos</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.botaoTabBar}>
+        <TouchableHighlight
+        style = {styles.botaoTabBar}
+        onPress = { () => { this.props.navigation.replace('AdicionarDisco1') } }
+        underlayColor = {Cores.corPrimariaHover} >
           <View style={styles.viewTabItem}>
             <Image
               style={{width: 25, height: 25, resizeMode: "cover"}}
