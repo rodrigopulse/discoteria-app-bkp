@@ -41,6 +41,11 @@ class AdicionarDisco1 extends React.Component {
   escolheArtista = (id) => {
     this.props.navigation.replace('AdicionarDisco2', {idArtista: id});
   }
+  toggleOpen = (e) => {
+    this.setState({
+      showMenu: !this.state.showMenu
+    });
+  }
   render() {
     return(
       <View style={styles.container}>
@@ -56,7 +61,7 @@ class AdicionarDisco1 extends React.Component {
             returnKeyType="search"
             onSubmitEditing={ this.buscarArtista }
             onChangeText = { ( text => this.setState( { inputBusca: text, showAlert: false } ) ) }
-            placeholder = "Buscar o artista" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
+            placeholder = "Buscar o artista" style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
           />
           {this.state.resultado.length > 0 &&
             <Text style={styles.texto}>Encontramos {this.state.resultado.length} artista(s)</Text>

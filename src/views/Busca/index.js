@@ -49,6 +49,11 @@ class Busca extends React.Component {
   adicionar = () => {
     console.log('adicionar');
   }
+  toggleOpen = (e) => {
+    this.setState({
+      showMenu: !this.state.showMenu
+    });
+  }
   render(){
     return(
       <View style={styles.container}>
