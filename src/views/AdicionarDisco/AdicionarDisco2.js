@@ -19,8 +19,12 @@ class AdicionarDisco2 extends React.Component {
     musicasLadoB: [],
     showCarregando: false,
     idArtista: this.props.route.params.idArtista,
+    //capaAtiva para colocar o estilo de qual foi selecionada
+    capaAtiva: 80,
+    //Enviar a url para a api
+    capaAlbum: '',
     titulo: '',
-    capaAlbum: []
+    capaAlbumApi: []
   }
   constructor(props) {
     super(props)
@@ -64,8 +68,14 @@ class AdicionarDisco2 extends React.Component {
     .then( (res) => {
       console.log(res.data.results.albummatches.album)
       this.setState({
-        capaAlbum: res.data.results.albummatches.album
+        capaAlbumApi: res.data.results.albummatches.album
       })
+    })
+  }
+  capa = (uri, index) => {
+    this.setState({
+      capaAtiva: index,
+      capaAlbum: uri
     })
   }
   render() {
@@ -112,10 +122,10 @@ class AdicionarDisco2 extends React.Component {
               <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Procurar Capa</Text>
             </TouchableHighlight>
             <View style={styles.containerCapa}>
-              {this.state.capaAlbum.map((res, index) =>
+              {this.state.capaAlbumApi.map((res, index) =>
                 <TouchableHighlight
-                  style={styles.botaoCapa}
-                  onPress = { () => { this.salvarDisco() } }
+                  style={this.state.capaAtiva == index ? styles.botaoCapaAtivo : styles.botaoCapa}
+                  onPress = { () => { this.capa(res.image[3]['#text'], index) } }
                   underlayColor = ''
                 >
                   <Image
@@ -158,6 +168,11 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   },
   botaoCapa: {
+    width: '20%'
+  },
+  botaoCapaAtivo: {
+    borderColor: Cores.corPrimariaHover,
+    borderWidth: 2,
     width: '20%'
   },
   containerCapa: {
