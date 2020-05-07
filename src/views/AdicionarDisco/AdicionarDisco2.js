@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableHighlight, ScrollView, Image } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 //Componentes
@@ -15,9 +15,12 @@ class AdicionarDisco2 extends React.Component {
   state = {
     inputLadoA: [],
     inputLadoB: [],
+    musicasLadoA: [],
+    musicasLadoB: [],
     showCarregando: false,
     idArtista: this.props.route.params.idArtista,
-    titulo: ''
+    titulo: '',
+    capaAlbum: []
   }
   constructor(props) {
     super(props)
@@ -29,13 +32,41 @@ class AdicionarDisco2 extends React.Component {
   }
   addLadoA = (key) => {
     let textInput = this.state.inputLadoA;
-    textInput.push(<TextInput key={key} style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }/>);
+    textInput.push(
+      <TextInput
+        key={key}
+        onEndEditing = {(e) => this.state.musicasLadoA.splice(key, 1, e.nativeEvent.text)}
+        style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
+      />
+    );
     this.setState({ textInput })
   }
   addLadoB = (key) => {
     let textInput = this.state.inputLadoB;
-    textInput.push(<TextInput key={key} style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }/>);
+    textInput.push(
+      <TextInput
+        key={key}
+        onEndEditing = {(e) => this.state.musicasLadoB.splice(key, 1, e.nativeEvent.text)}
+        style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
+      />
+    );
     this.setState({ textInput })
+  }
+  salvarDisco = () => {
+    console.log(this.state.musicasLadoA);
+    console.log(this.state.musicasLadoB);
+  }
+  getCoverAlbum = () => {
+    Axios({
+      url: `http://ws.audioscrobbler.com/2.0/?method=album.search&album=${this.state.titulo}&limit=5&api_key=d4cec9807eef062df88539eed5f01da2&format=json`,
+      method: "GET"
+    })
+    .then( (res) => {
+      console.log(res.data.results.albummatches.album)
+      this.setState({
+        capaAlbum: res.data.results.albummatches.album
+      })
+    })
   }
   render() {
     return (
@@ -73,6 +104,36 @@ class AdicionarDisco2 extends React.Component {
             >
               <Text style={BotoesStyle.textoBotaoLinkBranco, styles.botaoAddTexto}>+</Text>
             </TouchableHighlight>
+            <TouchableHighlight
+              onPress = { () => { this.getCoverAlbum() } }
+              underlayColor = { Cores.corPrimariaHover }
+              style = { [ BotoesStyle.botaoPadraoPrimaria, BotoesStyle.botao100, { "marginBottom": 40, "marginTop": 30 } ] }
+            >
+              <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Procurar Capa</Text>
+            </TouchableHighlight>
+            <View style={styles.containerCapa}>
+              {this.state.capaAlbum.map((res, index) =>
+                <TouchableHighlight
+                  style={styles.botaoCapa}
+                  onPress = { () => { this.salvarDisco() } }
+                  underlayColor = ''
+                >
+                  <Image
+                    style={styles.capa}
+                    source={{
+                      uri: res.image[3]['#text'],
+                    }}
+                  />
+                </TouchableHighlight>
+              )}
+            </View>
+            <TouchableHighlight
+              onPress = { () => { this.salvarDisco() } }
+              underlayColor = { Cores.corPrimariaHover }
+              style = { [ BotoesStyle.botaoPadraoPrimaria, BotoesStyle.botao100, { "marginBottom": 40, "marginTop": 30 } ] }
+            >
+              <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Salvar</Text>
+            </TouchableHighlight>
           </View>
         </ScrollView>
         <TabBar navigation={this.props.navigation} />
@@ -89,6 +150,20 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     marginBottom: 10
+  },
+  capa: {
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1 / 1,
+    resizeMode: "cover"
+  },
+  botaoCapa: {
+    width: '20%'
+  },
+  containerCapa: {
+    flexDirection: 'row',
+    alignContent: "stretch",
+    flex: 1
   },
   botaoAdd: {
     width: '100%',

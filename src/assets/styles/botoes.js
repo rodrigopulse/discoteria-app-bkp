@@ -21,6 +21,9 @@ export default BotoesStyle = StyleSheet.create({
     backgroundColor : "#fff",
     justifyContent: "center",
   },
+  botao100: {
+    width: "100%"
+  },
   textoBotaoPadraoBranco: {
     alignSelf: "center",
     color: Cores.corSecundaria,
