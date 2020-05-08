@@ -16,6 +16,7 @@ class AdicionarDisco1 extends React.Component {
   state = {
     inputBusca: '',
     showCarregando: false,
+    naoEncontrado: false,
     resultado: []
   }
   buscarArtista = async () => {
@@ -29,7 +30,6 @@ class AdicionarDisco1 extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
-        console.log("aqui")
         console.log("artista: ",res.data.data[0].nome)
         this.setState({
           showCarregando: false,
@@ -38,11 +38,11 @@ class AdicionarDisco1 extends React.Component {
       })
       .catch( () => {
         this.setState({
-          showCarregando: false
+          showCarregando: false,
+          naoEncontrado: true
         })
       })
     } catch (error) {
-
       this.setState({
         showCarregando: false
       })
@@ -87,6 +87,18 @@ class AdicionarDisco1 extends React.Component {
               <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >{item.nome}</Text>
             </TouchableHighlight>
           ) }
+          {this.state.naoEncontrado &&
+            <View style={styles.containerContent}>
+              <Text style={styles.texto}>Artista não encontrado! Você gostaria de adicionar o artista?</Text>
+              <TouchableHighlight
+                onPress = { () => { this.props.navigation.replace('AdicionarArtista') } }
+                underlayColor = { Cores.corPrimariaHover }
+                style = { BotoesStyle.botaoPadraoPrimaria }
+              >
+                <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Adicionar Artista</Text>
+              </TouchableHighlight>
+            </View>
+          }
         </View>
         <TabBar navigation={this.props.navigation} />
       </View>

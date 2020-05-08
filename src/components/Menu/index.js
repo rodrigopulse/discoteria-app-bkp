@@ -67,6 +67,16 @@ class Menu extends React.Component {
 
           <TouchableHighlight
             style={styles.itemMenu}
+            onPress = { () => {
+              this.props.toggleOpen && this.props.toggleOpen();
+              this.props.navigation.replace('AdicionarArtista');
+            } }
+            underlayColor = "#efefef">
+            <Text>Adicionar Artista</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            style={styles.itemMenu}
             onPress = { this.deslogar }
             underlayColor = "#efefef" >
             <Text style={styles.botaoSair}>Sair</Text>

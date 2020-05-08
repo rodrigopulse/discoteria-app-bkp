@@ -58,9 +58,6 @@ class AdicionarDisco2 extends React.Component {
     this.setState({ textInput })
   }
   salvarDisco = () => {
-    console.log('salvar disco');
-    console.log(this.state.musicasLadoA);
-    console.log(this.state.musicasLadoB);
     const url = `${API_URL}/albuns/cadastra`
     let data = {
       nome: this.state.titulo,

@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
     width: Dimensions.get( 'window' ).width,
     height: 50,
     backgroundColor: Cores.corErro,
-    position: "absolute",
     top: 0,
     left: 0,
     zIndex: 10,
     justifyContent: "center",
-    display: "flex"
+    position: "absolute",
+    display: "flex",
+    zIndex: 20,
   },
   alertSucesso: {
     width: Dimensions.get( 'window' ).width,
@@ -47,7 +48,8 @@ const styles = StyleSheet.create({
     left: 0,
     zIndex: 10,
     justifyContent: "center",
-    display: "flex"
+    display: "flex",
+    zIndex: 20,
   },
   alertText: {
     width: "100%",
