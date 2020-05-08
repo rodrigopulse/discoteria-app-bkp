@@ -21,6 +21,7 @@ class AdicionarDisco1 extends React.Component {
   }
   buscarArtista = async () => {
     this.setState({
+      resultado: [],
       showCarregando: true
     })
     try {
