@@ -51,6 +51,10 @@ class Menu extends React.Component {
             <Text>Lista de Desejos</Text>
           </TouchableHighlight>
           <TouchableHighlight
+            onPress = { () => {
+              this.props.toggleOpen && this.props.toggleOpen();
+              this.props.navigation.replace('AdicionarDisco1')
+            } }
             style={styles.itemMenu}>
             <Text>Adicionar Disco</Text>
           </TouchableHighlight>

@@ -44,6 +44,9 @@ class Busca extends React.Component {
         })
       })
     } catch (error) {
+      this.setState({
+        showCarregando: false
+      })
       console.log(error)
     }
   };

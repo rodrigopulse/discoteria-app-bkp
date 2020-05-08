@@ -29,14 +29,23 @@ class AdicionarDisco1 extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
+        console.log("aqui")
         console.log("artista: ",res.data.data[0].nome)
         this.setState({
           showCarregando: false,
           resultado: res.data.data
         })
       })
+      .catch( () => {
+        this.setState({
+          showCarregando: false
+        })
+      })
     } catch (error) {
-      console.log(error)
+
+      this.setState({
+        showCarregando: false
+      })
     }
   };
   escolheArtista = (id) => {
