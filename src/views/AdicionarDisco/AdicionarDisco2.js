@@ -57,8 +57,28 @@ class AdicionarDisco2 extends React.Component {
     this.setState({ textInput })
   }
   salvarDisco = () => {
+    console.log('salvar disco');
     console.log(this.state.musicasLadoA);
     console.log(this.state.musicasLadoB);
+    const url = `${API_URL}/albuns/cadastra`
+    let data = {
+      nome: this.state.titulo,
+      ladoa: this.state.musicasLadoA,
+      ladob: this.state.musicasLadoB,
+      artistas: [this.state.idArtista],
+      capa: this.state.capaAlbum
+    }
+    Axios({
+      url: url,
+      data: data,
+      method: "POST"
+    })
+    .then( (res) => {
+      console.log("Cadastrado com sucesso: ", res)
+    })
+    .catch( (res) => {
+      console.log("Erro: ", res)
+    })
   }
   getCoverAlbum = () => {
     Axios({
