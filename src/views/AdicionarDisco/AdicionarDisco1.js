@@ -6,6 +6,7 @@ import Axios from 'axios';
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
+import Menu from '../../components/Menu';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -52,6 +53,7 @@ class AdicionarDisco1 extends React.Component {
         { this.state.showCarregando &&
           <Carregando />
         }
+        {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         <Header toggleOpen={this.toggleOpen} />
 
         <View style={styles.containerContent}>

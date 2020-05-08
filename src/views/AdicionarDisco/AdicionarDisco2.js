@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableHighlight, ScrollView, Image } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 //Componentes
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
+import Menu from '../../components/Menu';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -106,8 +107,9 @@ class AdicionarDisco2 extends React.Component {
           <Carregando />
         }
         <ScrollView style={GridStyle.scrollView}>
+          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
           <Header toggleOpen={this.toggleOpen} />
-          <View style={GridStyle.content}>
+          <KeyboardAvoidingView style={GridStyle.content}>
             <Text style={styles.label}>Título do Álbum</Text>
             <TextInput
               onChangeText = { ( text => this.setState( { titulo: text, showAlert: false } ) ) }
@@ -165,7 +167,7 @@ class AdicionarDisco2 extends React.Component {
             >
               <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Salvar</Text>
             </TouchableHighlight>
-          </View>
+          </KeyboardAvoidingView>
         </ScrollView>
         <TabBar navigation={this.props.navigation} />
       </View>

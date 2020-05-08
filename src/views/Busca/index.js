@@ -7,6 +7,7 @@ import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
+import Menu from '../../components/Menu';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -61,6 +62,7 @@ class Busca extends React.Component {
           <Carregando />
         }
         <ScrollView style={GridStyle.scrollView}>
+          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
           <Header toggleOpen={this.toggleOpen} />
           <TextInput
             autoCapitalize = "none"

@@ -154,9 +154,9 @@ class Disco extends React.Component {
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
         }
-        {this.state.showMenu && <Menu navigation={this.props.navigation} /> }
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
+          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
           <Header toggleOpen={this.toggleOpen} />
           <Image
             style={styles.capa}
