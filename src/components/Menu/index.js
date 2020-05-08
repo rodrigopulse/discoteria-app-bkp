@@ -33,10 +33,12 @@ class Menu extends React.Component {
           <View style={styles.overlay}></View>
         </TouchableHighlight>
         <View style={styles.menuContent}>
+
           <TouchableHighlight
             style={styles.itemMenu}>
             <Text>Meu Perfil</Text>
           </TouchableHighlight>
+
           <TouchableHighlight
             style={styles.itemMenu}
             onPress = { () => {
@@ -46,18 +48,23 @@ class Menu extends React.Component {
             underlayColor = "#efefef">
             <Text>Minha Coleção</Text>
           </TouchableHighlight>
+
           <TouchableHighlight
+            underlayColor = "#efefef"
             style={styles.itemMenu}>
             <Text>Lista de Desejos</Text>
           </TouchableHighlight>
+
           <TouchableHighlight
+            style={styles.itemMenu}
             onPress = { () => {
               this.props.toggleOpen && this.props.toggleOpen();
-              this.props.navigation.replace('AdicionarDisco1')
+              this.props.navigation.replace('AdicionarDisco1');
             } }
-            style={styles.itemMenu}>
+            underlayColor = "#efefef">
             <Text>Adicionar Disco</Text>
           </TouchableHighlight>
+
           <TouchableHighlight
             style={styles.itemMenu}
             onPress = { this.deslogar }
