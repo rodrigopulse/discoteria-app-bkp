@@ -74,7 +74,8 @@ class AdicionarDisco2 extends React.Component {
       method: "POST"
     })
     .then( (res) => {
-      console.log("Cadastrado com sucesso: ", res)
+      console.log("Cadastrado com sucesso: ", res.data.data._id)
+      this.props.navigation.replace('Disco', {id: res.data.data._id})
     })
     .catch( (res) => {
       console.log("Erro: ", res)
