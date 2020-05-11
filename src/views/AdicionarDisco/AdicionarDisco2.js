@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableHighlight, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableHighlight, ScrollView, Image, Icon } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 //Componentes
@@ -16,6 +16,8 @@ class AdicionarDisco2 extends React.Component {
   state = {
     inputLadoA: [],
     inputLadoB: [],
+    chaveLadoA: 0,
+    chaveLadoB: 0,
     musicasLadoA: [],
     musicasLadoB: [],
     showCarregando: false,
@@ -40,11 +42,18 @@ class AdicionarDisco2 extends React.Component {
     textInput.push(
       <TextInput
         key={key}
-        onEndEditing = {(e) => this.state.musicasLadoA.splice(key, 1, e.nativeEvent.text)}
+        onEndEditing = {(e) => this.state.musicasLadoA.splice(this.state.chaveLadoA, 1, e.nativeEvent.text)}
         style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
       />
     );
-    this.setState({ textInput })
+    this.setState({ textInput, chaveLadoA: this.state.chaveLadoA + 1 })
+    console.log(this.state.chaveLadoA)
+  }
+  removeLadoA = () => {
+    let textInput = this.state.inputLadoA;
+    textInput.splice(this.state.inputLadoA.length - 1 , 1)
+    this.setState({ textInput, chaveLadoA: this.state.chaveLadoA - 1 })
+    this.state.musicasLadoA.splice(this.state.chaveLadoA - 1, 1)
   }
   addLadoB = (key) => {
     let textInput = this.state.inputLadoB;
@@ -56,6 +65,12 @@ class AdicionarDisco2 extends React.Component {
       />
     );
     this.setState({ textInput })
+  }
+  removeLadoB = () => {
+    let textInput = this.state.inputLadoB;
+    textInput.splice(this.state.inputLadoB.length - 1 , 1)
+    this.setState({ textInput, chaveLadoA: this.state.chaveLadoB - 1 })
+    this.state.musicasLadoA.splice(this.state.chaveLadoB - 1, 1)
   }
   salvarDisco = () => {
     const url = `${API_URL}/albuns/cadastra`
@@ -116,6 +131,15 @@ class AdicionarDisco2 extends React.Component {
             {this.state.inputLadoA.map((value, index) => {
               return value
             })}
+
+            <TouchableHighlight
+              onPress={() => this.removeLadoA(this.state.inputLadoA.length)}
+              style={[BotoesStyle.botaoPadraoPrimaria, styles.botaoRemove,]}
+              underlayColor={Cores.corPrimariaHover}
+            >
+              <Text style={BotoesStyle.textoBotaoLinkBranco, styles.botaoAddTexto}>-</Text>
+            </TouchableHighlight>
+
             <TouchableHighlight
               onPress={() => this.addLadoA(this.state.inputLadoA.length)}
               style={[BotoesStyle.botaoPadraoPrimaria, styles.botaoAdd,]}
@@ -123,10 +147,20 @@ class AdicionarDisco2 extends React.Component {
             >
               <Text style={BotoesStyle.textoBotaoLinkBranco, styles.botaoAddTexto}>+</Text>
             </TouchableHighlight>
+
             <Text style={styles.label}>Músicas Lado B</Text>
             {this.state.inputLadoB.map((value, index) => {
               return value
             })}
+
+            <TouchableHighlight
+              onPress={() => this.removeLadoA(this.state.inputLadoB.length)}
+              style={[BotoesStyle.botaoPadraoPrimaria, styles.botaoRemove,]}
+              underlayColor={Cores.corPrimariaHover}
+            >
+              <Text style={BotoesStyle.textoBotaoLinkBranco, styles.botaoAddTexto}>-</Text>
+            </TouchableHighlight>
+
             <TouchableHighlight
               onPress={() => this.addLadoB(this.state.inputLadoB.length)}
               style={[BotoesStyle.botaoPadraoPrimaria, styles.botaoAdd,]}
@@ -134,6 +168,7 @@ class AdicionarDisco2 extends React.Component {
             >
               <Text style={BotoesStyle.textoBotaoLinkBranco, styles.botaoAddTexto}>+</Text>
             </TouchableHighlight>
+
             <TouchableHighlight
               onPress = { () => { this.getCoverAlbum() } }
               underlayColor = { Cores.corPrimariaHover }
@@ -141,6 +176,7 @@ class AdicionarDisco2 extends React.Component {
             >
               <Text style = { BotoesStyle.textoBotaoPadraoPrimaria } >Procurar Capa</Text>
             </TouchableHighlight>
+
             <View style={styles.containerCapa}>
               {this.state.capaAlbumApi.map((res, index) =>
                 <TouchableHighlight
@@ -204,6 +240,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 30,
     backgroundColor: Cores.corPrimaria,
+    marginBottom: 15
+  },
+  botaoRemove: {
+    width: '100%',
+    height: 30,
+    backgroundColor: Cores.corErro,
     marginBottom: 15
   },
   botaoAddTexto: {
