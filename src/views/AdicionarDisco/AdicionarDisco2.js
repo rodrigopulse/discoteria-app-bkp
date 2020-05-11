@@ -69,8 +69,8 @@ class AdicionarDisco2 extends React.Component {
   removeLadoB = () => {
     let textInput = this.state.inputLadoB;
     textInput.splice(this.state.inputLadoB.length - 1 , 1)
-    this.setState({ textInput, chaveLadoA: this.state.chaveLadoB - 1 })
-    this.state.musicasLadoA.splice(this.state.chaveLadoB - 1, 1)
+    this.setState({ textInput, chaveLadoB: this.state.chaveLadoB - 1 })
+    this.state.musicasLadoB.splice(this.state.chaveLadoB - 1, 1)
   }
   salvarDisco = () => {
     const url = `${API_URL}/albuns/cadastra`
@@ -154,7 +154,7 @@ class AdicionarDisco2 extends React.Component {
             })}
 
             <TouchableHighlight
-              onPress={() => this.removeLadoA(this.state.inputLadoB.length)}
+              onPress={() => this.removeLadoB(this.state.inputLadoB.length)}
               style={[BotoesStyle.botaoPadraoPrimaria, styles.botaoRemove,]}
               underlayColor={Cores.corPrimariaHover}
             >

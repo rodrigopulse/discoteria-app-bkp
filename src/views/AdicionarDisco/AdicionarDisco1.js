@@ -34,7 +34,8 @@ class AdicionarDisco1 extends React.Component {
         console.log("artista: ",res.data.data[0].nome)
         this.setState({
           showCarregando: false,
-          resultado: res.data.data
+          resultado: res.data.data,
+          naoEncontrado: false
         })
       })
       .catch( () => {
