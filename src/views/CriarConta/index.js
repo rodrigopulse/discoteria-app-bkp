@@ -116,6 +116,7 @@ class CriarConta extends React.Component {
         <View style = { styles.conteudoContainer }>
           <Text style = { styles.titulo } >Criar Conta</Text>
           <TextInput
+            autoCapitalize = "words"
             onChangeText = { ( text => this.setState( { nome: text, showAlert: false } ) ) }
             placeholder = "seu nome" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />

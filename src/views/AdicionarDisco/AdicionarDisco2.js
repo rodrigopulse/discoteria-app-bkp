@@ -129,28 +129,33 @@ class AdicionarDisco2 extends React.Component {
           <KeyboardAvoidingView style={GridStyle.content}>
             <Text style={styles.label}>Título do Álbum</Text>
             <TextInput
+              autoCapitalize = "words"
               onChangeText = { ( text => this.setState( { titulo: text, showAlert: false } ) ) }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
             />
             <Text style={styles.label}>Ano de Lançamento</Text>
             <TextInput
+              keyboardType = 'numeric'
+              maxLength = {4}
+              placeholder = 'Exemplo: 1970'
               onChangeText = { ( text => this.setState( { ano: text, showAlert: false } ) ) }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
             />
             <Text style={styles.label}>Gênero</Text>
-            <Picker
-              selectedValue={ this.state.genero }
-              style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ genero: itemValue })
-              }>
-              <Picker.Item label="Selecione" value="Selecione" />
-              <Picker.Item label="Rock" value="Rock" />
-              <Picker.Item label="Blues" value="Blues" />
-              <Picker.Item label="Jazz" value="Jazz" />
-              <Picker.Item label="MPB" value="MPB" />
-              <Picker.Item label="Samba" value="Samba" />
-            </Picker>
+            <View style={[FormStyle.inputMarginBottom, { borderRadius: 10, overflow: "hidden", backgroundColor: "#fff", paddingLeft: 20 }]}>
+              <Picker
+                selectedValue={ this.state.genero }
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ genero: itemValue })
+                }>
+                <Picker.Item label="Selecione" value="Selecione" />
+                <Picker.Item label="Rock" value="Rock" />
+                <Picker.Item label="Blues" value="Blues" />
+                <Picker.Item label="Jazz" value="Jazz" />
+                <Picker.Item label="MPB" value="MPB" />
+                <Picker.Item label="Samba" value="Samba" />
+              </Picker>
+            </View>
 
             <Text style={styles.label}>Músicas Lado A</Text>
             {this.state.inputLadoA.map((value, index) => {
