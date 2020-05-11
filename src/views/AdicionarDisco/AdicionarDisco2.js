@@ -139,11 +139,12 @@ class AdicionarDisco2 extends React.Component {
             />
             <Text style={styles.label}>Gênero</Text>
             <Picker
-              selectedValue={this.state.genero}
+              selectedValue={ this.state.genero }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
               onValueChange={(itemValue, itemIndex) =>
-                this.setState({genero: itemValue})
+                this.setState({ genero: itemValue })
               }>
+              <Picker.Item label="Selecione" value="Selecione" />
               <Picker.Item label="Rock" value="Rock" />
               <Picker.Item label="Blues" value="Blues" />
               <Picker.Item label="Jazz" value="Jazz" />
