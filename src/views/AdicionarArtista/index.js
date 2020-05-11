@@ -79,6 +79,7 @@ class AdicionarArtista extends React.Component {
           <Text style={styles.texto}>Coloque o nome do artista corretamente, vale uma busca no google :)</Text>
 
           <TextInput
+            autoCapitalize = "words"
             placeholder = "nome do artista"
             onChangeText = { ( text => this.setState( { nome: text, showAlert: false } ) ) }
             style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }

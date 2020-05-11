@@ -15,14 +15,14 @@ import Menu from '../../components/Menu';
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
 class Colecao extends React.Component {
+  state = {
+    showCarregando: true,
+    showMenu: false,
+    colecao: [],
+    nenhumDisco: false
+  }
   constructor(props) {
     super(props);
-    this.state = {
-      showCarregando: true,
-      showMenu: false,
-      colecao: [],
-      nenhumDisco: false
-    }
   }
   getColecao = async () => {
     try {
@@ -38,7 +38,7 @@ class Colecao extends React.Component {
           colecao: res.data.data
         })
       })
-      .catch( (res) => {
+      .catch( () => {
         this.setState({
           showCarregando: false,
           nenhumDisco: true
@@ -62,9 +62,7 @@ class Colecao extends React.Component {
   render() {
     return(
       <View style={styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
+        { this.state.showCarregando && <Carregando />}
         {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         { this.state.nenhumDisco ? (
           <ScrollView style={GridStyle.scrollView}>
