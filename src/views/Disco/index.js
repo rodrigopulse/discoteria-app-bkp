@@ -25,6 +25,8 @@ class Disco extends React.Component {
       artista: '',
       ladoa: [],
       ladob: [],
+      ano: '',
+      genero: '',
       adicionado: false,
       showAlert: false,
       mensagemAlert: '',
@@ -53,11 +55,14 @@ class Disco extends React.Component {
         adicionado: true,
         capa: res.data.data[0].albuns.capa,
         nome: res.data.data[0].albuns.nome,
+        ano: res.data.data[0].albuns.ano,
+        genero: res.data.data[0].albuns.genero,
         artista: res.data.data[0].albuns.artistas[0].nome,
         ladoa: res.data.data[0].albuns.ladoa,
         ladob: res.data.data[0].albuns.ladob,
         idColecao: res.data.data[0]._id
       })
+      console.log(res.data.data[0].ano)
     })
     .catch( () => {
       let url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
@@ -70,11 +75,14 @@ class Disco extends React.Component {
           showCarregando: false,
           capa: res.data.data[0].capa,
           nome: res.data.data[0].nome,
+          ano: res.data.data[0].ano,
+          genero: res.data.data[0].genero,
           artista: res.data.data[0].artistas[0].nome,
           ladoa: res.data.data[0].ladoa,
           ladob: res.data.data[0].ladob,
           idColecao: res.data.data[0]._id
         })
+        console.log(res.data.data[0].ano)
       })
     })
   }
@@ -179,6 +187,12 @@ class Disco extends React.Component {
             </Text>
             <Text style={styles.textoBold}>
               Artista: <Text style={styles.texto}>{this.state.artista}</Text>
+            </Text>
+            <Text style={styles.textoBold}>
+              Ano de Lançamento: <Text style={styles.texto}>{this.state.ano}</Text>
+            </Text>
+            <Text style={styles.textoBold}>
+              Gênero: <Text style={styles.texto}>{this.state.genero}</Text>
             </Text>
           </View>
           <View style={styles.musicas}>

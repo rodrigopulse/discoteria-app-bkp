@@ -7,6 +7,7 @@ import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+import {Picker} from '@react-native-community/picker';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -27,6 +28,8 @@ class AdicionarDisco2 extends React.Component {
     //Enviar a url para a api
     capaAlbum: '',
     titulo: '',
+    ano: '',
+    genero: '',
     capaAlbumApi: []
   }
   constructor(props) {
@@ -79,7 +82,9 @@ class AdicionarDisco2 extends React.Component {
       ladoa: this.state.musicasLadoA,
       ladob: this.state.musicasLadoB,
       artistas: [this.state.idArtista],
-      capa: this.state.capaAlbum
+      capa: this.state.capaAlbum,
+      ano: this.state.ano,
+      genero: this.state.genero
     }
     Axios({
       url: url,
@@ -127,6 +132,25 @@ class AdicionarDisco2 extends React.Component {
               onChangeText = { ( text => this.setState( { titulo: text, showAlert: false } ) ) }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
             />
+            <Text style={styles.label}>Ano de Lançamento</Text>
+            <TextInput
+              onChangeText = { ( text => this.setState( { ano: text, showAlert: false } ) ) }
+              style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
+            />
+            <Text style={styles.label}>Gênero</Text>
+            <Picker
+              selectedValue={this.state.genero}
+              style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({genero: itemValue})
+              }>
+              <Picker.Item label="Rock" value="Rock" />
+              <Picker.Item label="Blues" value="Blues" />
+              <Picker.Item label="Jazz" value="Jazz" />
+              <Picker.Item label="MPB" value="MPB" />
+              <Picker.Item label="Samba" value="Samba" />
+            </Picker>
+
             <Text style={styles.label}>Músicas Lado A</Text>
             {this.state.inputLadoA.map((value, index) => {
               return value
@@ -180,6 +204,7 @@ class AdicionarDisco2 extends React.Component {
             <View style={styles.containerCapa}>
               {this.state.capaAlbumApi.map((res, index) =>
                 <TouchableHighlight
+                  key = {index}
                   style={this.state.capaAtiva == index ? styles.botaoCapaAtivo : styles.botaoCapa}
                   onPress = { () => { this.capa(res.image[3]['#text'], index) } }
                   underlayColor = ''
