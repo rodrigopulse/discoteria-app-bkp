@@ -3,11 +3,12 @@ import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 
 //Components
 import Alert from '../../components/Alert';
-import Carregando from '../../components/Carregando';
-
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -17,7 +18,6 @@ class CriarConta extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showCarregando: true,
       nome: "",
       email: "",
       senha: "",
@@ -38,35 +38,28 @@ class CriarConta extends React.Component {
       showAlert: false
     })
   }
-  fechaCarregando = () => {
-    this.setState({
-      showCarregando: false
-    })
-  }
   criarConta = async () => {
-    this.state = {
-      showCarregando: true
-    }
+    this.props.dispatch(toggleCarregando(true))
     // Validações
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(this.state.nome == "") {
       this.mensagemErro('Preencha o seu nome')
-      this.fechaCarregando()
+      this.props.dispatch(toggleCarregando(false))
       return false
     }
     if(this.state.email == "" || reg.test(this.state.email) === false) {
       this.mensagemErro('Preencha um e-mail válido')
-      this.fechaCarregando()
+      this.props.dispatch(toggleCarregando(false))
       return false
     }
     if(this.state.senha == "") {
       this.mensagemErro('Preencha uma senha')
-      this.fechaCarregando()
+      this.props.dispatch(toggleCarregando(false))
       return false
     }
     if(this.state.senha != this.state.senhaRepete) {
       this.mensagemErro('As senhas precisam ser iguais')
-      this.fechaCarregando()
+      this.props.dispatch(toggleCarregando(false))
       return false
     }
     try {
@@ -81,10 +74,10 @@ class CriarConta extends React.Component {
     catch(error) {
       if(error.response.data.code == '11000') {
         this.mensagemErro('Usuário já existe')
-        this.fechaCarregando()
+        this.props.dispatch(toggleCarregando(false))
       } else {
         this.mensagemErro('Ocorreu um erro')
-        this.fechaCarregando()
+        this.props.dispatch(toggleCarregando(false))
       }
     }
   }
@@ -92,13 +85,13 @@ class CriarConta extends React.Component {
     try {
       const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
       if(token != null || token) {
-        this.props.navigation.navigate( 'Colecao' )
+        this.props.navigation.replace( 'Colecao' )
       } else {
-        this.fechaCarregando();
+        this.props.dispatch(toggleCarregando(false))
       }
     }
     catch(error) {
-      this.fechaCarregando()
+      this.props.dispatch(toggleCarregando(false))
     }
   }
   componentDidMount() {
@@ -107,9 +100,6 @@ class CriarConta extends React.Component {
   render() {
     return(
       <View style = { styles.container } >
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
         }
@@ -150,7 +140,7 @@ class CriarConta extends React.Component {
           <TouchableHighlight
             style = { [ BotoesStyle.botaoLinkBranco, { "marginBottom": 15 } ] }
             onPress = { () =>
-              this.props.navigation.navigate( 'Login' )
+              this.props.navigation.replace( 'Login' )
             }
           >
             <Text style = { BotoesStyle.textoBotaoLinkBranco } >Fazer Login</Text>
@@ -179,4 +169,4 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
 })
-export default CriarConta
+export default connect( state => ({estado: state}))(CriarConta)

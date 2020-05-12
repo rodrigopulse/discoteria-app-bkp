@@ -1,22 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Text} from 'react-native';
+import { View, StyleSheet, Text, Button} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-community/async-storage';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 //Componentes
-import Carregando from '../../components/Carregando';
 import Card from '../../components/Card';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
+
 class Colecao extends React.Component {
   state = {
-    showCarregando: true,
     showMenu: false,
     colecao: [],
     nenhumDisco: false
@@ -25,6 +27,7 @@ class Colecao extends React.Component {
     super(props);
   }
   getColecao = async () => {
+    this.props.dispatch(toggleCarregando(true))
     try {
       const idUsuario = await AsyncStorage.getItem('@DiscoteriaApp:id');
       const url = `${API_URL}/colecao/id?id=${idUsuario}`
@@ -33,20 +36,20 @@ class Colecao extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
-          showCarregando: false,
           colecao: res.data.data
         })
       })
       .catch( () => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
-          showCarregando: false,
           nenhumDisco: true
         })
       })
     } catch (error) {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
-        showCarregando: false,
         nenhumDisco: true
       })
     }
@@ -59,10 +62,10 @@ class Colecao extends React.Component {
   componentDidMount() {
     this.getColecao()
   }
+
   render() {
     return(
       <View style={styles.container}>
-        { this.state.showCarregando && <Carregando />}
         {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         { this.state.nenhumDisco ? (
           <ScrollView style={GridStyle.scrollView}>
@@ -111,4 +114,4 @@ const styles = StyleSheet.create({
     marginBottom: 20
   }
 })
-export default Colecao
+export default connect( state => ({estado: state}))(Colecao);

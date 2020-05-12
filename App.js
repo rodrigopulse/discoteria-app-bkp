@@ -5,6 +5,9 @@ import {
   StatusBar,
 } from 'react-native';
 import OneSignal from 'react-native-onesignal';
+import { Provider } from 'react-redux';
+import store from './src/store';
+
 //Views
 import Login from './src/views/Login';
 import CriarConta from './src/views/CriarConta';
@@ -14,6 +17,8 @@ import Busca from './src/views/Busca';
 import AdicionarDisco1 from './src/views/AdicionarDisco/AdicionarDisco1';
 import AdicionarDisco2 from './src/views/AdicionarDisco/AdicionarDisco2';
 import AdicionarArtista from './src/views/AdicionarArtista';
+//Components
+import Carregando from './src/components/Carregando';
 
 const Stack = createStackNavigator();
 
@@ -29,18 +34,21 @@ class App extends Component {
     return (
       <>
         <StatusBar barStyle="dark-content" />
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
-            <Stack.Screen name="Login" component={Login}/>
-            <Stack.Screen name="CriarConta" component={CriarConta} />
-            <Stack.Screen name="Colecao" component={Colecao} />
-            <Stack.Screen name="Disco" component={Disco} />
-            <Stack.Screen name="Busca" component={Busca} />
-            <Stack.Screen name="AdicionarDisco1" component={AdicionarDisco1} />
-            <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
-            <Stack.Screen name="AdicionarArtista" component={AdicionarArtista} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store = { store }>
+          <Carregando />
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
+              <Stack.Screen name="Login" component={Login}/>
+              <Stack.Screen name="CriarConta" component={CriarConta} />
+              <Stack.Screen name="Colecao" component={Colecao} />
+              <Stack.Screen name="Disco" component={Disco} />
+              <Stack.Screen name="Busca" component={Busca} />
+              <Stack.Screen name="AdicionarDisco1" component={AdicionarDisco1} />
+              <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
+              <Stack.Screen name="AdicionarArtista" component={AdicionarArtista} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </Provider>
       </>
     );
   }

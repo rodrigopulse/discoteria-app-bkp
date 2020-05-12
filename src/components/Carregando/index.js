@@ -1,15 +1,20 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import Cores from '../../assets/styles/cores';
-class Carregando extends React.Component {
-  render() {
-    return (
-      <View style={styles.containerCarregando}>
-        <Image style={{width: 280, height: 280, resizeMode: "cover"}} source={require('../../assets/images/carregando.gif')}/>
-      </View>
-    )
-  }
+import { connect } from 'react-redux';
+
+const Carregando = ({ estado }) => {
+  return (
+    <View style={ estado.carregando ? styles.containerCarregando : styles.carregandoNone}>
+      {estado.carregando &&
+        <Image
+          style={{width: 280, height: 280, resizeMode: "cover"}}
+          source={require('../../assets/images/carregando.gif')}
+        />
+      }
+    </View>
+  )
 }
+
 const styles = StyleSheet.create({
   containerCarregando: {
     height: "100%",
@@ -18,9 +23,11 @@ const styles = StyleSheet.create({
     zIndex: 10,
     justifyContent: "center",
     alignItems: "center",
-    position: 'absolute',
     left:     0,
     top:      0,
   },
+  carregandoNone: {
+    display: "none"
+  }
 })
-export default Carregando;
+export default connect( state => ({ estado: state }))(Carregando);

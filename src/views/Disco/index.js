@@ -3,12 +3,15 @@ import Axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
 //Components
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import Alert from '../../components/Alert';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
@@ -44,12 +47,14 @@ class Disco extends React.Component {
     })
   }
   getDisco = async () => {
+    this.props.dispatch(toggleCarregando(true))
     let url = `${API_URL}/colecao/idalbum?id=${this.props.route.params.id}`
     Axios({
       url: url,
       method: "GET"
     })
     .then( (res) => {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
         showCarregando: false,
         adicionado: true,
@@ -65,12 +70,14 @@ class Disco extends React.Component {
       console.log(res.data.data[0].ano)
     })
     .catch( () => {
+      this.props.dispatch(toggleCarregando(false))
       let url = `${API_URL}/albuns/id?id=${this.props.route.params.id}`;
       Axios({
         url: url,
         method: "GET"
       })
       .then( (res) => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
           showCarregando: false,
           capa: res.data.data[0].capa,
@@ -87,10 +94,7 @@ class Disco extends React.Component {
     })
   }
   removerColecao = async () => {
-    this.setState({
-      showCarregando: true
-    })
-    console.log('adicionar coleção')
+    this.props.dispatch(toggleCarregando(true))
     try {
       const url = `${API_URL}/colecao/delete/${this.state.idColecao}`
       Axios({
@@ -98,6 +102,7 @@ class Disco extends React.Component {
         method: "POST"
       })
       .then( (res) => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
           adicionado: false,
           showAlert: true,
@@ -107,6 +112,7 @@ class Disco extends React.Component {
         })
       })
     } catch(erro) {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
         showAlert: true,
         mensagemAlert: "Ocorreu um erro",
@@ -115,9 +121,7 @@ class Disco extends React.Component {
     }
   }
   adicionarColecao = async () => {
-    this.setState({
-      showCarregando: true
-    })
+    this.props.dispatch(toggleCarregando(true))
     console.log('adicionar coleção')
     try {
       const idUsuario = await AsyncStorage.getItem('@DiscoteriaApp:id');
@@ -134,6 +138,7 @@ class Disco extends React.Component {
         method: "POST"
       })
       .then( (res) => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
           adicionado: true,
           showAlert: true,
@@ -143,6 +148,7 @@ class Disco extends React.Component {
         })
       })
     } catch(erro) {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
         showAlert: true,
         mensagemAlert: "Ocorreu um erro",
@@ -266,4 +272,4 @@ const styles = StyleSheet.create({
     paddingBottom: 70
   }
 })
-export default Disco
+export default connect( state => ({estado: state}))(Disco);
