@@ -143,4 +143,5 @@ const styles = StyleSheet.create({
     marginBottom: 15
   }
 });
-export default AdicionarDisco1
+
+export default connect( state => ({estado: state}))(AdicionarDisco1);

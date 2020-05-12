@@ -4,7 +4,6 @@ import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 //Componentes
-import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
@@ -284,4 +283,5 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   }
 })
-export default AdicionarDisco2
+
+export default connect( state => ({estado: state}))(AdicionarDisco2);
