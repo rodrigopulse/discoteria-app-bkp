@@ -2,12 +2,14 @@ import React from 'react';
 import { View, TextInput, StyleSheet, ScrollView, TouchableHighlight, Text} from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 //Componentes
-import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
 import Menu from '../../components/Menu';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -15,16 +17,13 @@ import Cores from '../../assets/styles/cores';
 
 class Busca extends React.Component {
   state = {
-    showCarregando: false,
     inputBusca: '',
     resultado: [],
     adicionar: false
   }
 
   buscarDisco = async () => {
-    this.setState({
-      showCarregando: true
-    })
+    this.props.dispatch(toggleCarregando(true))
     try {
       const url = `${API_URL}/albuns/busca?termo=${this.state.inputBusca}`
       Axios({
@@ -32,6 +31,7 @@ class Busca extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
+        this.props.dispatch(toggleCarregando(false))
         if( res.data.data.length <= 0 ) {
           console.log('resultado não encontrado')
           this.setState({
@@ -39,14 +39,11 @@ class Busca extends React.Component {
           })
         }
         this.setState({
-          showCarregando: false,
           resultado: res.data.data
         })
       })
     } catch (error) {
-      this.setState({
-        showCarregando: false
-      })
+      this.props.dispatch(toggleCarregando(false))
       console.log(error)
     }
   };
@@ -61,9 +58,6 @@ class Busca extends React.Component {
   render(){
     return(
       <View style={styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         <ScrollView style={GridStyle.scrollView}>
           {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
           <Header toggleOpen={this.toggleOpen} />
@@ -123,4 +117,4 @@ const styles = StyleSheet.create({
     marginBottom: 15
   }
 })
-export default Busca;
+export default connect( state => ({estado: state}))(Busca);

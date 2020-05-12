@@ -3,27 +3,24 @@ import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 import { View, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import { connect } from 'react-redux';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
-
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Components
 import Alert from '../../components/Alert';
-import Carregando from '../../components/Carregando';
 class Login extends React.Component {
   state = {
     email: "",
     senha: "",
     showAlert: false,
-    mensagemAlert: "",
-    showCarregando: false
+    mensagemAlert: ""
   }
   login = async ( email, senha ) => {
-    this.state = {
-      showCarregando: true
-    }
+    this.props.dispatch(toggleCarregando(true))
     let data = {
       "email": email,
       "senha": senha
@@ -34,12 +31,11 @@ class Login extends React.Component {
       await AsyncStorage.setItem('@DiscoteriaApp:id', res.data.id);
       this.props.navigation.navigate( 'Colecao' )
     } catch(error) {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
         showAlert: true,
-        showCarregando: false,
         mensagemAlert: "Usuário e/ou senha incorretos"
       })
-      console.log("Erro: ", error)
     }
   }
   closeAlert = e => {
@@ -50,9 +46,6 @@ class Login extends React.Component {
   render() {
     return(
       <View style = { styles.container } >
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
         }
@@ -113,4 +106,4 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
 })
-export default Login
+export default connect( state => ({estado: state}))(Login);
