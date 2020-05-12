@@ -21,7 +21,6 @@ class Disco extends React.Component {
     super(props)
     this.state = {
       idColecao: '',
-      showCarregando: true,
       showMenu: false,
       capa: '',
       nome: '',
@@ -56,7 +55,6 @@ class Disco extends React.Component {
     .then( (res) => {
       this.props.dispatch(toggleCarregando(false))
       this.setState({
-        showCarregando: false,
         adicionado: true,
         capa: res.data.data[0].albuns.capa,
         nome: res.data.data[0].albuns.nome,
@@ -79,7 +77,6 @@ class Disco extends React.Component {
       .then( (res) => {
         this.props.dispatch(toggleCarregando(false))
         this.setState({
-          showCarregando: false,
           capa: res.data.data[0].capa,
           nome: res.data.data[0].nome,
           ano: res.data.data[0].ano,
@@ -108,7 +105,6 @@ class Disco extends React.Component {
           showAlert: true,
           mensagemAlert: "Disco removido da Coleção",
           sucessoAlert: true,
-          showCarregando: false
         })
       })
     } catch(erro) {
@@ -116,7 +112,6 @@ class Disco extends React.Component {
       this.setState({
         showAlert: true,
         mensagemAlert: "Ocorreu um erro",
-        showCarregando: false
       })
     }
   }
@@ -143,7 +138,6 @@ class Disco extends React.Component {
           adicionado: true,
           showAlert: true,
           mensagemAlert: "Disco adicionado",
-          showCarregando: false,
           sucessoAlert: true,
         })
       })
@@ -152,7 +146,6 @@ class Disco extends React.Component {
       this.setState({
         showAlert: true,
         mensagemAlert: "Ocorreu um erro",
-        showCarregando: false
       })
     }
   }
@@ -162,9 +155,6 @@ class Disco extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
         }

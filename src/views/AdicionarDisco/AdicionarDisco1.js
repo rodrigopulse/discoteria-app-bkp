@@ -2,11 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 //Componentes
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -15,14 +18,13 @@ import Cores from '../../assets/styles/cores';
 class AdicionarDisco1 extends React.Component {
   state = {
     inputBusca: '',
-    showCarregando: false,
     naoEncontrado: false,
     resultado: []
   }
   buscarArtista = async () => {
+    this.props.dispatch(toggleCarregando(true))
     this.setState({
       resultado: [],
-      showCarregando: true
     })
     try {
       const url = `${API_URL}/artistas/busca?termo=${this.state.inputBusca}`
@@ -31,23 +33,20 @@ class AdicionarDisco1 extends React.Component {
         method: 'GET'
       })
       .then( (res) => {
-        console.log("artista: ",res.data.data[0].nome)
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
-          showCarregando: false,
           resultado: res.data.data,
           naoEncontrado: false
         })
       })
       .catch( () => {
+        this.props.dispatch(toggleCarregando(false))
         this.setState({
-          showCarregando: false,
           naoEncontrado: true
         })
       })
     } catch (error) {
-      this.setState({
-        showCarregando: false
-      })
+      this.props.dispatch(toggleCarregando(false))
     }
   };
   escolheArtista = (id) => {
@@ -61,9 +60,6 @@ class AdicionarDisco1 extends React.Component {
   render() {
     return(
       <View style={styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         <Header toggleOpen={this.toggleOpen} />
 

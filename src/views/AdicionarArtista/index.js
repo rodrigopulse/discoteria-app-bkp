@@ -2,19 +2,20 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 //Componentes
-import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import Alert from '../../components/Alert';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
 class AdicionarArtista extends React.Component {
   state = {
-    showCarregando: false,
     showAlert: false,
     mensagemAlert: "",
     sucessoAlert: false,
@@ -31,9 +32,7 @@ class AdicionarArtista extends React.Component {
     })
   }
   salvarArtista = () => {
-    this.setState({
-      showCarregando: true
-    })
+    this.props.dispatch(toggleCarregando(true))
     const url = `${API_URL}/artistas/cadastra`
     let data = {
       nome: this.state.nome,
@@ -45,16 +44,16 @@ class AdicionarArtista extends React.Component {
     })
     .then( (res) => {
       console.log("Cadastrado com sucesso: ", res.data.data._id)
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
-        showCarregando: false,
         showAlert: true,
         mensagemAlert: 'Cadastrado com sucesso',
         sucessoAlert: true
       })
     })
     .catch( (res) => {
+      this.props.dispatch(toggleCarregando(false))
       this.setState({
-        showCarregando: false,
         showAlert: true,
         mensagemAlert: 'Cadastro não realizado'
       })
@@ -64,9 +63,7 @@ class AdicionarArtista extends React.Component {
   render() {
     return (
       <View style = {styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
+
         { this.state.showAlert &&
           <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
         }
@@ -126,4 +123,5 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 });
-export default AdicionarArtista
+
+export default connect( state => ({estado: state}))(AdicionarArtista);

@@ -2,12 +2,15 @@ import React from 'react';
 import { StyleSheet, View, Text, TextInput, KeyboardAvoidingView, TouchableHighlight, ScrollView, Image, Icon } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
+import { connect } from 'react-redux';
 //Componentes
 import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import {Picker} from '@react-native-community/picker';
+//Actions
+import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -21,7 +24,6 @@ class AdicionarDisco2 extends React.Component {
     chaveLadoB: 0,
     musicasLadoA: [],
     musicasLadoB: [],
-    showCarregando: false,
     idArtista: this.props.route.params.idArtista,
     //capaAtiva para colocar o estilo de qual foi selecionada
     capaAtiva: 80,
@@ -76,6 +78,7 @@ class AdicionarDisco2 extends React.Component {
     this.state.musicasLadoB.splice(this.state.chaveLadoB - 1, 1)
   }
   salvarDisco = () => {
+    this.props.dispatch(toggleCarregando(true))
     const url = `${API_URL}/albuns/cadastra`
     let data = {
       nome: this.state.titulo,
@@ -92,10 +95,11 @@ class AdicionarDisco2 extends React.Component {
       method: "POST"
     })
     .then( (res) => {
-      console.log("Cadastrado com sucesso: ", res.data.data._id)
+      this.props.dispatch(toggleCarregando(false))
       this.props.navigation.replace('Disco', {id: res.data.data._id})
     })
     .catch( (res) => {
+      this.props.dispatch(toggleCarregando(false))
       console.log("Erro: ", res)
     })
   }
@@ -120,9 +124,6 @@ class AdicionarDisco2 extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        { this.state.showCarregando &&
-          <Carregando />
-        }
         <ScrollView style={GridStyle.scrollView}>
           {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
           <Header toggleOpen={this.toggleOpen} />
