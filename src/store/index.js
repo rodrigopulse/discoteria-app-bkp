@@ -4,7 +4,8 @@ const ESTADO_INICIAL = {
   carregando: false,
   showAlert: false,
   sucessoAlert: false,
-  mensagemAlert: 'Teste'
+  mensagemAlert: 'Teste',
+  logado: false
 }
 
 function reducer( state = ESTADO_INICIAL, action) {
@@ -19,7 +20,12 @@ function reducer( state = ESTADO_INICIAL, action) {
       mensagemAlert: action.mensagemAlert
     }
   }
-  console.log(action)
+  if(action.type === 'LOGIN') {
+    return {
+      ...state,
+      logado: action.logado
+    }
+  }
   return state
 }
 
