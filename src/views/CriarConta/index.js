@@ -5,10 +5,10 @@ import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-nat
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 
-//Components
-import Alert from '../../components/Alert';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
+import { showAlert } from '../../store/actions/alert';
+
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
@@ -22,46 +22,31 @@ class CriarConta extends React.Component {
       email: "",
       senha: "",
       senhaRepete: "",
-      showAlert: false,
-      mensagemAlert: "",
     }
   }
-  mensagemErro = (mensagem) => {
-    console.log('erro')
-    this.setState({
-      showAlert: true,
-      mensagemAlert: mensagem
-    })
-  }
   closeAlert = e => {
-    this.setState({
-      showAlert: false
-    })
+    this.props.dispatch(showAlert(false, false, ''))
   }
   criarConta = async () => {
-    this.props.dispatch(toggleCarregando(true))
     // Validações
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(this.state.nome == "") {
-      this.mensagemErro('Preencha o seu nome')
-      this.props.dispatch(toggleCarregando(false))
+      this.props.dispatch(showAlert(true, false, 'preencha o seu nome'))
       return false
     }
     if(this.state.email == "" || reg.test(this.state.email) === false) {
-      this.mensagemErro('Preencha um e-mail válido')
-      this.props.dispatch(toggleCarregando(false))
+      this.props.dispatch(showAlert(true, false, 'preencha um e-mail válido'))
       return false
     }
     if(this.state.senha == "") {
-      this.mensagemErro('Preencha uma senha')
-      this.props.dispatch(toggleCarregando(false))
+      this.props.dispatch(showAlert(true, false, 'preencha uma senha'))
       return false
     }
     if(this.state.senha != this.state.senhaRepete) {
-      this.mensagemErro('As senhas precisam ser iguais')
-      this.props.dispatch(toggleCarregando(false))
+      this.props.dispatch(showAlert(true, false, 'as senhas precisam ser iguais'))
       return false
     }
+    this.props.dispatch(toggleCarregando(true))
     try {
       data = {
         "nome": this.state.nome,
@@ -73,10 +58,10 @@ class CriarConta extends React.Component {
     }
     catch(error) {
       if(error.response.data.code == '11000') {
-        this.mensagemErro('Usuário já existe')
+        this.props.dispatch(showAlert(true, false, 'usuário já existe'))
         this.props.dispatch(toggleCarregando(false))
       } else {
-        this.mensagemErro('Ocorreu um erro')
+        this.props.dispatch(showAlert(true, false, 'ocorreu um erro'))
         this.props.dispatch(toggleCarregando(false))
       }
     }
@@ -100,9 +85,6 @@ class CriarConta extends React.Component {
   render() {
     return(
       <View style = { styles.container } >
-        { this.state.showAlert &&
-          <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
-        }
         <View style = { styles.conteudoContainer }>
           <Text style = { styles.titulo } >Criar Conta</Text>
           <TextInput

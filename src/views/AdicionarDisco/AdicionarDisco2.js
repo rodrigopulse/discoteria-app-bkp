@@ -130,7 +130,7 @@ class AdicionarDisco2 extends React.Component {
             <Text style={styles.label}>Título do Álbum</Text>
             <TextInput
               autoCapitalize = "words"
-              onChangeText = { ( text => this.setState( { titulo: text, showAlert: false } ) ) }
+              onChangeText = { ( text => this.setState( { titulo: text } ) ) }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
             />
             <Text style={styles.label}>Ano de Lançamento</Text>
@@ -138,7 +138,7 @@ class AdicionarDisco2 extends React.Component {
               keyboardType = 'numeric'
               maxLength = {4}
               placeholder = 'Exemplo: 1970'
-              onChangeText = { ( text => this.setState( { ano: text, showAlert: false } ) ) }
+              onChangeText = { ( text => this.setState( { ano: text } ) ) }
               style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
             />
             <Text style={styles.label}>Gênero</Text>

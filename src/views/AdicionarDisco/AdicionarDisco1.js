@@ -69,7 +69,7 @@ class AdicionarDisco1 extends React.Component {
           <TextInput
             returnKeyType="search"
             onSubmitEditing={ this.buscarArtista }
-            onChangeText = { ( text => this.setState( { inputBusca: text, showAlert: false } ) ) }
+            onChangeText = { ( text => this.setState( { inputBusca: text } ) ) }
             placeholder = "Buscar o artista" style={ [ FormStyle.inputs100, FormStyle.inputMarginBottom ] }
           />
           {this.state.resultado.length > 0 &&
