@@ -89,26 +89,38 @@ class CriarConta extends React.Component {
           <Text style = { styles.titulo } >Criar Conta</Text>
           <TextInput
             autoCapitalize = "words"
-            onChangeText = { ( text => this.setState( { nome: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { nome: text } )
+            } ) }
             placeholder = "seu nome" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />
           <TextInput
             keyboardType = "email-address"
             autoCapitalize = "none"
-            onChangeText = { ( text => this.setState( { email: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { email: text } )
+            } ) }
             placeholder = "seu e-mail" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />
           <TextInput
             placeholder="sua senha"
             autoCapitalize = "none"
-            onChangeText = { ( text => this.setState( { senha: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { senha: text } )
+            } ) }
             secureTextEntry = { true }
             style = { [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />
           <TextInput
             placeholder="repita a senha"
             autoCapitalize = "none"
-            onChangeText = { ( text => this.setState( { senhaRepete: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { senhaRepete: text } )
+            } ) }
             secureTextEntry = { true }
             style = { [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />

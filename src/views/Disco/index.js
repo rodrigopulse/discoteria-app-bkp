@@ -5,13 +5,13 @@ import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'r
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 //Components
-import Carregando from '../../components/Carregando';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
 import Alert from '../../components/Alert';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
+import { showAlert } from '../../store/actions/alert';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
@@ -65,7 +65,6 @@ class Disco extends React.Component {
         ladob: res.data.data[0].albuns.ladob,
         idColecao: res.data.data[0]._id
       })
-      console.log(res.data.data[0].ano)
     })
     .catch( () => {
       this.props.dispatch(toggleCarregando(false))
