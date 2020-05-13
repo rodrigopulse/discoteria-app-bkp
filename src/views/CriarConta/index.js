@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 
 //Actions
@@ -65,22 +64,6 @@ class CriarConta extends React.Component {
         this.props.dispatch(toggleCarregando(false))
       }
     }
-  }
-  verificaToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
-      if(token != null || token) {
-        this.props.navigation.replace( 'Colecao' )
-      } else {
-        this.props.dispatch(toggleCarregando(false))
-      }
-    }
-    catch(error) {
-      this.props.dispatch(toggleCarregando(false))
-    }
-  }
-  componentDidMount() {
-    this.verificaToken();
   }
   render() {
     return(
