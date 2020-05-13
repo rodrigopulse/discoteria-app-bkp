@@ -34,10 +34,16 @@ class AdicionarDisco1 extends React.Component {
       })
       .then( (res) => {
         this.props.dispatch(toggleCarregando(false))
-        this.setState({
-          resultado: res.data.data,
-          naoEncontrado: false
-        })
+        if(res.data.data.length == 0) {
+          this.setState({
+            naoEncontrado: true
+          })
+        } else {
+          this.setState({
+            resultado: res.data.data,
+            naoEncontrado: false
+          })
+        }
       })
       .catch( () => {
         this.props.dispatch(toggleCarregando(false))
