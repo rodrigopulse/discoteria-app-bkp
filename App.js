@@ -19,6 +19,7 @@ import AdicionarDisco2 from './src/views/AdicionarDisco/AdicionarDisco2';
 import AdicionarArtista from './src/views/AdicionarArtista';
 //Components
 import Carregando from './src/components/Carregando';
+import Alert from './src/components/Alert';
 
 const Stack = createStackNavigator();
 
@@ -35,7 +36,6 @@ class App extends Component {
       <>
         <StatusBar barStyle="dark-content" />
         <Provider store = { store }>
-          <Carregando />
           <NavigationContainer>
             <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
               <Stack.Screen name="Login" component={Login}/>
@@ -47,6 +47,8 @@ class App extends Component {
               <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
               <Stack.Screen name="AdicionarArtista" component={AdicionarArtista} />
             </Stack.Navigator>
+            <Alert />
+            <Carregando />
           </NavigationContainer>
         </Provider>
       </>

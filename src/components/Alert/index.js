@@ -1,20 +1,27 @@
-import React, { Component } from 'react';
+import React  from 'react';
 import { TouchableOpacity, Text, Dimensions, StyleSheet, Image } from 'react-native';
+import { connect } from 'react-redux';
+//Actions
+import { showAlert } from '../../store/actions/alert';
 //Estilos
 import Cores from '../../assets/styles/cores';
 
-export default class Alert extends Component {
-  constructor( props ) {
-    super( props )
+class Alert extends React.Component{
+  constructor(props) {
+    super(props)
   }
-  close = () => {
-    this.props.fecharAlert && this.props.fecharAlert();
-  }
-  render() {
+  render(){
     return (
-      <TouchableOpacity style = { this.props.sucesso == true ? styles.alertSucesso : styles.alert } onPress = { () => this.close() } >
+      <TouchableOpacity
+        style = { [
+          styles.alert,
+          this.props.estado.sucessoAlert == true ? styles.alertSucesso : '',
+          this.props.estado.showAlert == true ? styles.alertAtivo : styles.alertNone
+        ]}
+        onPress = { () => this.props.dispatch(showAlert(false, false, '')) }
+      >
         <Text style = { styles.alertText } >
-          { this.props.mensagem }
+          { this.props.estado.mensagemAlert}
         </Text>
         <Image
           source = { require('../../assets/images/icons/baseline_close_white_18dp.png') }
@@ -36,20 +43,16 @@ const styles = StyleSheet.create({
     zIndex: 10,
     justifyContent: "center",
     position: "absolute",
-    display: "flex",
     zIndex: 20,
   },
   alertSucesso: {
-    width: Dimensions.get( 'window' ).width,
-    height: 50,
     backgroundColor: Cores.corPrimariaHover,
-    position: "absolute",
-    top: 0,
-    left: 0,
-    zIndex: 10,
-    justifyContent: "center",
-    display: "flex",
-    zIndex: 20,
+  },
+  alertNone: {
+    top: -50
+  },
+  alertAtivo: {
+    top: 0
   },
   alertText: {
     width: "100%",
@@ -66,3 +69,4 @@ const styles = StyleSheet.create({
     position: "absolute"
   }
 })
+export default connect( state => ({ estado: state }))(Alert);

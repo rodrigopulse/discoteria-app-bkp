@@ -10,26 +10,19 @@ import Menu from '../../components/Menu';
 import Alert from '../../components/Alert';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
+import { showAlert } from '../../store/actions/alert';
 //Estilos
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
 class AdicionarArtista extends React.Component {
   state = {
-    showAlert: false,
-    mensagemAlert: "",
-    sucessoAlert: false,
     nome: ''
   }
   toggleOpen = (e) => {
     this.setState({
       showMenu: !this.state.showMenu
     });
-  }
-  closeAlert = e => {
-    this.setState({
-      showAlert: false
-    })
   }
   salvarArtista = () => {
     this.props.dispatch(toggleCarregando(true))
@@ -45,28 +38,16 @@ class AdicionarArtista extends React.Component {
     .then( (res) => {
       console.log("Cadastrado com sucesso: ", res.data.data._id)
       this.props.dispatch(toggleCarregando(false))
-      this.setState({
-        showAlert: true,
-        mensagemAlert: 'Cadastrado com sucesso',
-        sucessoAlert: true
-      })
+      this.props.dispatch(showAlert(true, true, 'cadastrado com sucesso'))
     })
     .catch( (res) => {
       this.props.dispatch(toggleCarregando(false))
-      this.setState({
-        showAlert: true,
-        mensagemAlert: 'Cadastro não realizado'
-      })
-      console.log("Erro: ", res)
+      this.props.dispatch(showAlert(true, false, 'cadastro não realizado'))
     })
   }
   render() {
     return (
       <View style = {styles.container}>
-
-        { this.state.showAlert &&
-          <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
-        }
         {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         <Header toggleOpen={this.toggleOpen} />
 
