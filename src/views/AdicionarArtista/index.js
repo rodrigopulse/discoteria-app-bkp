@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
-import Alert from '../../components/Alert';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';

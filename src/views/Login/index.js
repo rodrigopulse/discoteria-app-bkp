@@ -10,14 +10,11 @@ import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
-//Components
-import Alert from '../../components/Alert';
+import { showAlert } from '../../store/actions/alert';
 class Login extends React.Component {
   state = {
     email: "",
     senha: "",
-    showAlert: false,
-    mensagemAlert: ""
   }
   login = async ( email, senha ) => {
     this.props.dispatch(toggleCarregando(true))
@@ -32,35 +29,33 @@ class Login extends React.Component {
       this.props.navigation.navigate( 'Colecao' )
     } catch(error) {
       this.props.dispatch(toggleCarregando(false))
-      this.setState({
-        showAlert: true,
-        mensagemAlert: "Usuário e/ou senha incorretos"
-      })
+      this.props.dispatch(showAlert(true, false, 'usuário e/ou senha incorretos'))
     }
   }
   closeAlert = e => {
-    this.setState({
-      showAlert: false
-    })
+    this.props.dispatch(showAlert(false, false, ''))
   }
   render() {
     return(
       <View style = { styles.container } >
-        { this.state.showAlert &&
-          <Alert mensagem = { this.state.mensagemAlert } fecharAlert = { this.closeAlert }/>
-        }
         <View style = { styles.conteudoContainer }>
           <Text style = { styles.titulo } >Login</Text>
           <TextInput
             keyboardType = "email-address"
             autoCapitalize = "none"
-            onChangeText = { ( text => this.setState( { email: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { email: text } )
+            } ) }
             placeholder = "seu e-mail" style={ [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />
           <TextInput
             placeholder="sua senha"
             autoCapitalize = "none"
-            onChangeText = { ( text => this.setState( { senha: text, showAlert: false } ) ) }
+            onChangeText = { ( text => {
+              this.closeAlert();
+              this.setState( { senha: text } )
+            } ) }
             secureTextEntry = { true }
             style = { [ FormStyle.inputs, FormStyle.inputMarginBottom ] }
           />

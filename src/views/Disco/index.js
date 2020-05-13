@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import TabBar from '../../components/TabBar';
 import Header from '../../components/Header';
 import Menu from '../../components/Menu';
-import Alert from '../../components/Alert';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';
@@ -30,20 +29,12 @@ class Disco extends React.Component {
       ano: '',
       genero: '',
       adicionado: false,
-      showAlert: false,
-      mensagemAlert: '',
-      sucessoAlert: false
     }
   }
   toggleOpen = (e) => {
     this.setState({
       showMenu: !this.state.showMenu
     });
-  }
-  closeAlert = e => {
-    this.setState({
-      showAlert: false
-    })
   }
   getDisco = async () => {
     this.props.dispatch(toggleCarregando(true))
@@ -99,19 +90,15 @@ class Disco extends React.Component {
       })
       .then( (res) => {
         this.props.dispatch(toggleCarregando(false))
+        this.props.dispatch(showAlert(true, true, 'disco removido da Coleção'))
         this.setState({
           adicionado: false,
-          showAlert: true,
-          mensagemAlert: "Disco removido da Coleção",
-          sucessoAlert: true,
         })
+
       })
     } catch(erro) {
       this.props.dispatch(toggleCarregando(false))
-      this.setState({
-        showAlert: true,
-        mensagemAlert: "Ocorreu um erro",
-      })
+      this.props.dispatch(showAlert(true, false, 'ocorreu um erro'))
     }
   }
   adicionarColecao = async () => {
@@ -133,19 +120,14 @@ class Disco extends React.Component {
       })
       .then( (res) => {
         this.props.dispatch(toggleCarregando(false))
+        this.props.dispatch(showAlert(true, true, 'disco adicionado'))
         this.setState({
           adicionado: true,
-          showAlert: true,
-          mensagemAlert: "Disco adicionado",
-          sucessoAlert: true,
         })
       })
     } catch(erro) {
       this.props.dispatch(toggleCarregando(false))
-      this.setState({
-        showAlert: true,
-        mensagemAlert: "Ocorreu um erro",
-      })
+      this.props.dispatch(showAlert(true, false, 'ocorreu um erro'))
     }
   }
   componentDidMount() {
@@ -154,9 +136,7 @@ class Disco extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        { this.state.showAlert &&
-          <Alert mensagem = { this.state.mensagemAlert } sucesso = {this.state.sucessoAlert} fecharAlert = { this.closeAlert }/>
-        }
+
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
           {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
