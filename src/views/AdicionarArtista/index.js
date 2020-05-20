@@ -10,6 +10,7 @@ import { showAlert } from '../../store/actions/alert';
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
+import GridStyle from '../../assets/styles/grid';
 class AdicionarArtista extends React.Component {
   state = {
     nome: ''
@@ -37,7 +38,7 @@ class AdicionarArtista extends React.Component {
   }
   render() {
     return (
-      <View style = {styles.container}>
+      <View style = {GridStyle.container}>
         <View style={GridStyle.content}>
 
           <Text style={styles.titulo}>Novo Artista</Text>
@@ -66,10 +67,6 @@ class AdicionarArtista extends React.Component {
 
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Cores.corSecundaria,
-    flex: 1,
-  },
   titulo: {
     textAlign: "center",
     fontSize: 22,

@@ -1,15 +1,19 @@
 import React from 'react';
 import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
+//Actions
+import { showMenu } from '../../store/actions/menu';
 import Cores from '../../assets/styles/cores';
 class Header extends React.Component {
   constructor(props) {
     super(props)
   }
+  toggleOpen = () => {
+    this.props.dispatch(showMenu(true))
+  }
   render() {
-    console.log("estado: ", this.props.estado);
     return(
-      <View style={styles.header}>
+      <View style={ this.props.estado.logado ? styles.header : styles.headerNone}>
         <TouchableHighlight
           style={{width: 35, height: 35, borderRadius: 100, justifyContent: "center", alignItems: "center"}}
           onPress = { this.toggleOpen }
@@ -36,6 +40,9 @@ const styles = StyleSheet.create({
     zIndex: 10,
     top: 0,
     paddingTop: 0
+  },
+  headerNone: {
+    display: "none"
   }
 })
 

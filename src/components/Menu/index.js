@@ -2,29 +2,31 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableHighlight, Dimensions } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Cores from '../../assets/styles/cores';
-
+import { connect } from 'react-redux';
+import * as RootNavigation from '../../../RootNavigation.js';
+//Actions
+import { showMenu } from '../../store/actions/menu';
+import { logado } from '../../store/actions/logado';
 class Menu extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      open: false
-    }
   }
   deslogar = async () => {
     try {
       await AsyncStorage.removeItem('@DiscoteriaApp:token');
-      this.props.toggleOpen && this.props.toggleOpen();
-      this.props.navigation.navigate('Login')
+      this.fecharMenu();
+      this.props.dispatch(logado(false));
+      RootNavigation.navigate('Login');
     } catch(error) {
       console.log(error)
     }
   }
   fecharMenu = () => {
-    this.props.toggleOpen && this.props.toggleOpen();
+    this.props.dispatch(showMenu(false))
   }
   render() {
     return (
-      <View style={styles.menu}>
+      <View style={ this.props.estado.showMenu ? styles.menu : styles.menuNone}>
         <TouchableHighlight
           style={styles.overlay}
           onPress = { () => { this.fecharMenu() } }
@@ -35,6 +37,16 @@ class Menu extends React.Component {
         <View style={styles.menuContent}>
 
           <TouchableHighlight
+            style={styles.itemMenu}
+            onPress = { () => {
+              this.fecharMenu();
+              RootNavigation.navigate('Busca');
+            } }
+            underlayColor = "#efefef">
+            <Text>Buscar</Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
             style={styles.itemMenu}>
             <Text>Meu Perfil</Text>
           </TouchableHighlight>
@@ -42,8 +54,9 @@ class Menu extends React.Component {
           <TouchableHighlight
             style={styles.itemMenu}
             onPress = { () => {
-              this.props.toggleOpen && this.props.toggleOpen();
-              this.props.navigation.replace('Colecao');
+              this.fecharMenu();
+              //this.props.navigation.replace('Colecao');
+              RootNavigation.navigate('Colecao');
             } }
             underlayColor = "#efefef">
             <Text>Minha Coleção</Text>
@@ -58,8 +71,8 @@ class Menu extends React.Component {
           <TouchableHighlight
             style={styles.itemMenu}
             onPress = { () => {
-              this.props.toggleOpen && this.props.toggleOpen();
-              this.props.navigation.replace('AdicionarDisco1');
+              this.fecharMenu();
+              RootNavigation.navigate('AdicionarDisco1');
             } }
             underlayColor = "#efefef">
             <Text>Adicionar Disco</Text>
@@ -68,8 +81,8 @@ class Menu extends React.Component {
           <TouchableHighlight
             style={styles.itemMenu}
             onPress = { () => {
-              this.props.toggleOpen && this.props.toggleOpen();
-              this.props.navigation.replace('AdicionarArtista');
+              this.fecharMenu();
+              RootNavigation.navigate('AdicionarArtista');
             } }
             underlayColor = "#efefef">
             <Text>Adicionar Artista</Text>
@@ -92,8 +105,13 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     zIndex: 20,
     top: 0,
+    left: 0,
     paddingTop: 0,
+    position: "absolute",
     backgroundColor: "rgba(0, 0, 0, .8)"
+  },
+  menuNone: {
+    display: "none"
   },
   overlay: {
     width: Dimensions.get('window').width - 250,
@@ -130,4 +148,4 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 })
-export default Menu
+export default connect( state => ({estado: state}))(Menu);

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { API_URL } from 'react-native-dotenv'
 import { View, Text, TouchableHighlight, TextInput, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
@@ -26,21 +27,6 @@ class CriarConta extends React.Component {
   }
   closeAlert = e => {
     this.props.dispatch(showAlert(false, false, ''))
-  }
-  verificaToken = async () => {
-    try {
-      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
-      console.log(token);
-      if(token != null || token) {
-        this.props.dispatch(logado(true));
-        this.props.navigation.navigate( 'Colecao' )
-      } else {
-        this.props.dispatch(logado(false));
-      }
-    }
-    catch(error) {
-      this.props.dispatch(logado(false));
-    }
   }
   criarConta = async () => {
     // Validações
@@ -79,6 +65,23 @@ class CriarConta extends React.Component {
         this.props.dispatch(showAlert(true, false, 'ocorreu um erro'))
         this.props.dispatch(toggleCarregando(false))
       }
+    }
+  }
+  verificaToken = async () => {
+    console.log("verifica token")
+    try {
+      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
+      console.log('token: ', token)
+      if(token != null || token) {
+        console.log("conectado")
+        this.props.dispatch(logado(true));
+        this.props.navigation.replace( 'Colecao' )
+      } else {
+        this.props.dispatch(toggleCarregando(false))
+      }
+    }
+    catch(error) {
+      this.props.dispatch(toggleCarregando(false))
     }
   }
   componentDidMount() {

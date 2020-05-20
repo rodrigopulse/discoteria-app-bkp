@@ -57,7 +57,7 @@ class Colecao extends React.Component {
 
   render() {
     return(
-      <View style={styles.container}>
+      <View style={GridStyle.container}>
         { this.state.nenhumDisco ? (
           <ScrollView style={GridStyle.scrollView}>
             <View style={GridStyle.content}>
@@ -92,11 +92,6 @@ class Colecao extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Cores.corSecundaria,
-    flex: 1,
-    zIndex: 1
-  },
   totalColecao: {
     color: "#fff",
     marginBottom: 20

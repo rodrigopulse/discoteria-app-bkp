@@ -1,4 +1,4 @@
-export function showAlert(showMenu) {
+export function showMenu(showMenu) {
   return {
     type: "SHOW_MENU",
     showMenu,

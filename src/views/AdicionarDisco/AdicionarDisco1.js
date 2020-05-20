@@ -9,6 +9,7 @@ import { toggleCarregando } from '../../store/actions/carregando';
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
+import GridStyle from '../../assets/styles/grid';
 
 class AdicionarDisco1 extends React.Component {
   state = {
@@ -56,7 +57,7 @@ class AdicionarDisco1 extends React.Component {
 
   render() {
     return(
-      <View style={styles.container}>
+      <View style={GridStyle.container}>
 
         <View style={styles.containerContent}>
           <Text style={styles.titulo}>Vamos por partes :)</Text>
@@ -99,10 +100,6 @@ class AdicionarDisco1 extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Cores.corSecundaria,
-    flex: 1,
-  },
   titulo: {
     fontSize: 22,
     color: Cores.corPrimaria,

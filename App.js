@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { navigationRef } from './RootNavigation';
 import {
   StatusBar,
 } from 'react-native';
@@ -30,14 +30,15 @@ const Stack = createStackNavigator();
 class App extends Component {
   constructor(props) {
     super(props);
-    OneSignal.init("66e4bf9a-ba43-4222-be66-b0b9e7491586", {kOSSettingsKeyAutoPrompt : false});
+    OneSignal.init("66e4bf9a-ba43-4222-be66-b0b9e7491586");
   }
   render() {
+    console.log(this)
     return (
       <>
         <StatusBar barStyle="dark-content" />
         <Provider store = { store }>
-          <NavigationContainer>
+          <NavigationContainer ref={navigationRef}>
             <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
               <Stack.Screen name="Login" component={Login}/>
               <Stack.Screen name="CriarConta" component={CriarConta} />
@@ -48,10 +49,10 @@ class App extends Component {
               <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
               <Stack.Screen name="AdicionarArtista" component={AdicionarArtista} />
             </Stack.Navigator>
-            { store.getState().logado && <Header /> }
+            <Header />
+            <Menu/>
             <Alert />
             <Carregando />
-            { store.getState().logado && <TabBar /> }
           </NavigationContainer>
         </Provider>
       </>

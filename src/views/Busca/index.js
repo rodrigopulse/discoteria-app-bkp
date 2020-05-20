@@ -8,6 +8,7 @@ import Card from '../../components/Card';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
+import GridStyle from '../../assets/styles/grid';
 import BotoesStyle from '../../assets/styles/botoes';
 import FormStyle from '../../assets/styles/forms';
 import Cores from '../../assets/styles/cores';
@@ -50,7 +51,7 @@ class Busca extends React.Component {
 
   render(){
     return(
-      <View style={styles.container}>
+      <View style={GridStyle.container}>
         <ScrollView style={GridStyle.scrollView}>
 
           <TextInput
@@ -90,10 +91,6 @@ class Busca extends React.Component {
 
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Cores.corSecundaria,
-    flex: 1,
-  },
   inputBusca: {
     width: "100%",
     borderRadius: 0

@@ -11,6 +11,7 @@ import Cores from '../../assets/styles/cores';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';
+import { logado } from '../../store/actions/logado';
 class Login extends React.Component {
   state = {
     email: "",
@@ -26,6 +27,8 @@ class Login extends React.Component {
       const res = await axios.post(`${API_URL}/usuarios/login`, data);
       await AsyncStorage.setItem('@DiscoteriaApp:token', res.data.token);
       await AsyncStorage.setItem('@DiscoteriaApp:id', res.data.id);
+      this.props.dispatch(toggleCarregando(false))
+      this.props.dispatch(logado(true))
       this.props.navigation.navigate( 'Colecao' )
     } catch(error) {
       this.props.dispatch(toggleCarregando(false))

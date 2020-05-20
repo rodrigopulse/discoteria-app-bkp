@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image, StyleSheet, Text } from 'react-native';
-
+import { connect } from 'react-redux';
 //Estilos
 import Cores from '../../assets/styles/cores';
 import { TouchableHighlight } from 'react-native-gesture-handler';
@@ -8,7 +8,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 class TabBar extends React.Component {
   render() {
     return (
-      <View style={styles.tabBar}>
+      <View style={ this.props.estado.logado ? styles.tabBar : styles.tabBarNone}>
         <TouchableHighlight
           style = {styles.botaoTabBar}
           onPress = { () => { this.props.navigation.replace('Colecao') } }
@@ -31,7 +31,7 @@ class TabBar extends React.Component {
         </TouchableHighlight>
         <TouchableHighlight
         style = {styles.botaoTabBar}
-        onPress = { () => { this.props.navigation.replace('AdicionarDisco1') } }
+        onPress = { () => { navigator.replace('AdicionarDisco1') } }
         underlayColor = {Cores.corPrimariaHover} >
           <View style={styles.viewTabItem}>
             <Image
@@ -41,7 +41,7 @@ class TabBar extends React.Component {
           </View>
         </TouchableHighlight>
         <TouchableHighlight
-          onPress = { () => { this.props.navigation.navigate('Busca') } }
+          onPress = { () => { this.props.navigation.replace('Busca') } }
           underlayColor = {Cores.corPrimariaHover}
           style={styles.botaoTabBar}
         >
@@ -73,6 +73,9 @@ const styles = StyleSheet.create({
     //paddingTop: 10,
     //paddingBottom: 10
   },
+  tabBarNone: {
+    display: "none"
+  },
   textoBotao: {
     fontSize: 12
   },
@@ -80,4 +83,4 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 })
-export default TabBar
+export default connect( state => ({estado: state}))(TabBar);
