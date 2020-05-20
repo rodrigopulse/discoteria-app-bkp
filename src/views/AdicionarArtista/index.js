@@ -3,10 +3,6 @@ import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-nat
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-//Componentes
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';
@@ -17,11 +13,6 @@ import Cores from '../../assets/styles/cores';
 class AdicionarArtista extends React.Component {
   state = {
     nome: ''
-  }
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
   }
   salvarArtista = () => {
     this.props.dispatch(toggleCarregando(true))
@@ -47,9 +38,6 @@ class AdicionarArtista extends React.Component {
   render() {
     return (
       <View style = {styles.container}>
-        {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-        <Header toggleOpen={this.toggleOpen} />
-
         <View style={GridStyle.content}>
 
           <Text style={styles.titulo}>Novo Artista</Text>
@@ -72,7 +60,6 @@ class AdicionarArtista extends React.Component {
 
         </View>
 
-        <TabBar navigation={this.props.navigation} />
       </View>
     )
   }

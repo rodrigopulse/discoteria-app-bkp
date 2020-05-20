@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
+import { logado } from '../../store/actions/logado';
 import { showAlert } from '../../store/actions/alert';
 
 //Estilos
@@ -25,6 +26,21 @@ class CriarConta extends React.Component {
   }
   closeAlert = e => {
     this.props.dispatch(showAlert(false, false, ''))
+  }
+  verificaToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
+      console.log(token);
+      if(token != null || token) {
+        this.props.dispatch(logado(true));
+        this.props.navigation.navigate( 'Colecao' )
+      } else {
+        this.props.dispatch(logado(false));
+      }
+    }
+    catch(error) {
+      this.props.dispatch(logado(false));
+    }
   }
   criarConta = async () => {
     // Validações
@@ -64,6 +80,9 @@ class CriarConta extends React.Component {
         this.props.dispatch(toggleCarregando(false))
       }
     }
+  }
+  componentDidMount() {
+    this.verificaToken();
   }
   render() {
     return(

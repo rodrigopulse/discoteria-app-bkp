@@ -4,10 +4,7 @@ import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 //Componentes
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
 import Card from '../../components/Card';
-import Menu from '../../components/Menu';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
@@ -50,17 +47,12 @@ class Busca extends React.Component {
   adicionar = () => {
     console.log('adicionar');
   }
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  }
+
   render(){
     return(
       <View style={styles.container}>
         <ScrollView style={GridStyle.scrollView}>
-          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-          <Header toggleOpen={this.toggleOpen} />
+
           <TextInput
             autoCapitalize = "none"
             returnKeyType="search"
@@ -91,7 +83,7 @@ class Busca extends React.Component {
             />
           ) }
         </ScrollView>
-        <TabBar navigation={this.props.navigation} />
+
       </View>
     );
   }

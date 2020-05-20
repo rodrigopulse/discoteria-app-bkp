@@ -3,11 +3,6 @@ import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-nat
 import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-//Componentes
-import Carregando from '../../components/Carregando';
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 //Estilos
@@ -58,16 +53,10 @@ class AdicionarDisco1 extends React.Component {
   escolheArtista = (id) => {
     this.props.navigation.replace('AdicionarDisco2', {idArtista: id});
   }
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  }
+
   render() {
     return(
       <View style={styles.container}>
-        {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-        <Header toggleOpen={this.toggleOpen} />
 
         <View style={styles.containerContent}>
           <Text style={styles.titulo}>Vamos por partes :)</Text>
@@ -104,7 +93,7 @@ class AdicionarDisco1 extends React.Component {
             </View>
           }
         </View>
-        <TabBar navigation={this.props.navigation} />
+
       </View>
     )
   }

@@ -4,10 +4,6 @@ import { API_URL } from 'react-native-dotenv';
 import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
-//Components
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';
@@ -31,11 +27,7 @@ class Disco extends React.Component {
       adicionado: false,
     }
   }
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  }
+
   getDisco = async () => {
     this.props.dispatch(toggleCarregando(true))
     let url = `${API_URL}/colecao/idalbum?id=${this.props.route.params.id}`
@@ -139,8 +131,6 @@ class Disco extends React.Component {
 
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
-          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-          <Header toggleOpen={this.toggleOpen} />
           <Image
             style={styles.capa}
             source={{
@@ -197,7 +187,6 @@ class Disco extends React.Component {
           }
         </ScrollView>
         }
-        <TabBar navigation={ this.props.navigation } />
       </View>
     )
   }

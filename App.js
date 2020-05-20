@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-community/async-storage';
+
 import {
   StatusBar,
 } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import { Provider } from 'react-redux';
 import store from './src/store';
-//Actions
-import { logado } from './src/store/actions/logado';
+
 //Views
 import Login from './src/views/Login';
 import CriarConta from './src/views/CriarConta';
@@ -22,6 +21,9 @@ import AdicionarArtista from './src/views/AdicionarArtista';
 //Components
 import Carregando from './src/components/Carregando';
 import Alert from './src/components/Alert';
+import Header from './src/components/Header';
+import TabBar from './src/components/TabBar';
+import Menu from './src/components/Menu';
 
 const Stack = createStackNavigator();
 
@@ -29,33 +31,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     OneSignal.init("66e4bf9a-ba43-4222-be66-b0b9e7491586", {kOSSettingsKeyAutoPrompt : false});
-    OneSignal.addEventListener('received', this.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('ids', this.onIds);
-  }
-  verificaToken = async () => {
-    console.log("verifica token")
-    try {
-      const token = await AsyncStorage.getItem('@DiscoteriaApp:token')
-      if(token != null || token) {
-        store.dispatch(logado(true))
-      }
-    }
-    catch(error) {
-      console.log(error)
-    }
-  }
-  componentDidMount() {
-    this.verificaToken()
-  }
-  rotaInicial = () => {
-    console.log(store.getState())
-    if(store.getState().logado === true) {
-      return 'Colecao'
-    } else {
-      return 'CriarConta'
-    }
-
   }
   render() {
     return (
@@ -63,7 +38,7 @@ class App extends Component {
         <StatusBar barStyle="dark-content" />
         <Provider store = { store }>
           <NavigationContainer>
-            <Stack.Navigator initialRouteName={this.rotaInicial()} headerMode="null">
+            <Stack.Navigator initialRouteName='CriarConta' headerMode="null">
               <Stack.Screen name="Login" component={Login}/>
               <Stack.Screen name="CriarConta" component={CriarConta} />
               <Stack.Screen name="Colecao" component={Colecao} />
@@ -73,8 +48,10 @@ class App extends Component {
               <Stack.Screen name="AdicionarDisco2" component={AdicionarDisco2} />
               <Stack.Screen name="AdicionarArtista" component={AdicionarArtista} />
             </Stack.Navigator>
+            { store.getState().logado && <Header /> }
             <Alert />
             <Carregando />
+            { store.getState().logado && <TabBar /> }
           </NavigationContainer>
         </Provider>
       </>

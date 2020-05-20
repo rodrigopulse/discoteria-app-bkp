@@ -1,19 +1,13 @@
 import React from 'react';
 import { View, Image, StyleSheet, TouchableHighlight } from 'react-native';
+import { connect } from 'react-redux';
 import Cores from '../../assets/styles/cores';
 class Header extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      open: false
-    }
-  }
-  toggleOpen = () => {
-    ("abreMenu");
-    this.setState({ open: !this.state.open });
-    this.props.toggleOpen && this.props.toggleOpen();
   }
   render() {
+    console.log("estado: ", this.props.estado);
     return(
       <View style={styles.header}>
         <TouchableHighlight
@@ -38,10 +32,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 20,
     justifyContent: "center",
+    position: "absolute",
     zIndex: 10,
     top: 0,
     paddingTop: 0
   }
 })
 
-export default Header
+export default connect( state => ({estado: state}))(Header);

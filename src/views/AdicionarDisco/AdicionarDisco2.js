@@ -4,9 +4,6 @@ import { API_URL } from 'react-native-dotenv';
 import Axios from 'axios';
 import { connect } from 'react-redux';
 //Componentes
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
 import {Picker} from '@react-native-community/picker';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
@@ -36,11 +33,7 @@ class AdicionarDisco2 extends React.Component {
   constructor(props) {
     super(props)
   }
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  }
+
   addLadoA = (key) => {
     let textInput = this.state.inputLadoA;
     textInput.push(
@@ -124,8 +117,7 @@ class AdicionarDisco2 extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView style={GridStyle.scrollView}>
-          {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
-          <Header toggleOpen={this.toggleOpen} />
+
           <KeyboardAvoidingView style={GridStyle.content}>
             <Text style={styles.label}>Título do Álbum</Text>
             <TextInput
@@ -233,7 +225,7 @@ class AdicionarDisco2 extends React.Component {
             </TouchableHighlight>
           </KeyboardAvoidingView>
         </ScrollView>
-        <TabBar navigation={this.props.navigation} />
+
       </View>
     )
   }

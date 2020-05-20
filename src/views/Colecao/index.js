@@ -7,9 +7,6 @@ import Axios from 'axios';
 import { connect } from 'react-redux';
 //Componentes
 import Card from '../../components/Card';
-import TabBar from '../../components/TabBar';
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
 //Actions
 import { toggleCarregando } from '../../store/actions/carregando';
 
@@ -54,11 +51,6 @@ class Colecao extends React.Component {
       })
     }
   };
-  toggleOpen = (e) => {
-    this.setState({
-      showMenu: !this.state.showMenu
-    });
-  }
   componentDidMount() {
     this.getColecao()
   }
@@ -66,17 +58,14 @@ class Colecao extends React.Component {
   render() {
     return(
       <View style={styles.container}>
-        {this.state.showMenu && <Menu navigation = {this.props.navigation} toggleOpen={this.toggleOpen} /> }
         { this.state.nenhumDisco ? (
           <ScrollView style={GridStyle.scrollView}>
-            <Header toggleOpen={this.toggleOpen} />
             <View style={GridStyle.content}>
               <Text style = {styles.totalColecao}>Nenhum disco na sua coleção</Text>
             </View>
           </ScrollView>
         ) : (
           <ScrollView style={GridStyle.scrollView}>
-            <Header toggleOpen={this.toggleOpen} />
             <View style={GridStyle.content}>
               { this.state.colecao.length === 0 ? (
                 null
@@ -98,7 +87,6 @@ class Colecao extends React.Component {
             </View>
           </ScrollView>
         )}
-        <TabBar navigation={this.props.navigation} />
       </View>
     )
   }

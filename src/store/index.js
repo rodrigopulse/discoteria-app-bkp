@@ -5,7 +5,8 @@ const ESTADO_INICIAL = {
   showAlert: false,
   sucessoAlert: false,
   mensagemAlert: 'Teste',
-  logado: false
+  logado: false,
+  showMenu: false
 }
 
 function reducer( state = ESTADO_INICIAL, action) {
@@ -24,6 +25,12 @@ function reducer( state = ESTADO_INICIAL, action) {
     return {
       ...state,
       logado: action.logado
+    }
+  }
+  if(action.type === 'SHOW_MENU') {
+    return {
+      ...state,
+      showMenu: action.showMenu
     }
   }
   return state
