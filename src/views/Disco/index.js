@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { toggleCarregando } from '../../store/actions/carregando';
 import { showAlert } from '../../store/actions/alert';
 //Estilos
-import Cores from '../../assets/styles/cores';
 import GridStyle from '../../assets/styles/grid';
 
 class Disco extends React.Component {
@@ -127,7 +126,7 @@ class Disco extends React.Component {
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View style={GridStyle.container}>
 
         {this.state.capa != '' &&
         <ScrollView style={GridStyle.scrollView}>
@@ -192,11 +191,6 @@ class Disco extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Cores.corSecundaria,
-    flex: 1,
-    zIndex: 1
-  },
   containerContent: {
     paddingLeft: 20,
     paddingRight: 20,
