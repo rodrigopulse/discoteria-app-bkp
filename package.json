@@ -25,6 +25,8 @@
     "react-native-screens": "^2.4.0",
     "react-navigation": "^2.18.2",
     "react-navigator": "0.0.0-0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
     "rxjs": "^6.5.5"
   },
   "devDependencies": {
