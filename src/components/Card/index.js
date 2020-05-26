@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_URL, IMAGENS_ALBUNS } from 'react-native-dotenv';
 import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native';
 
 class Card extends React.Component {
@@ -18,7 +19,7 @@ class Card extends React.Component {
             <Image
               style={styles.capa}
               source={{
-                uri: this.props.capa,
+                uri: `${IMAGENS_ALBUNS}/${this.props.capa}`,
               }}
             />
             <View style={styles.cardTextos}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
-import { API_URL } from 'react-native-dotenv';
+import { API_URL, IMAGENS_ALBUNS } from 'react-native-dotenv';
 import { View, Image, Text, ScrollView, StyleSheet, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
@@ -67,7 +67,6 @@ class Disco extends React.Component {
           ladob: res.data.data[0].ladob,
           idColecao: res.data.data[0]._id
         })
-        console.log(res.data.data[0].ano)
       })
     })
   }
@@ -94,7 +93,6 @@ class Disco extends React.Component {
   }
   adicionarColecao = async () => {
     this.props.dispatch(toggleCarregando(true))
-    console.log('adicionar coleção')
     try {
       const idUsuario = await AsyncStorage.getItem('@DiscoteriaApp:id');
       const albumId = this.props.route.params.id;
@@ -133,7 +131,7 @@ class Disco extends React.Component {
           <Image
             style={styles.capa}
             source={{
-              uri: this.state.capa,
+              uri: `${IMAGENS_ALBUNS}/${this.state.capa}.jpg`,
             }}
           />
           <View style={styles.containerContent}>
